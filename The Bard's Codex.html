@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bard's Codex — Music & Poetry Cheat Sheet</title>
+<style>
+  :root{
+    --bg:#0c0c11; --bg2:#101019; --card:#15151f; --card2:#1b1b28;
+    --ink:#ECECF1; --sub:#9aa0b0; --line:#2a2a3a;
+    --violet:#8b5cf6; --amber:#f59e0b; --cyan:#22d3ee;
+    --emerald:#34d399; --pink:#f472b6; --gold:#fbbf24; --red:#fb7185;
+    --accent:var(--violet);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 700px at 15% -10%, #1a1230 0%, transparent 55%),
+      radial-gradient(1000px 600px at 100% 0%, #102028 0%, transparent 50%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    font-size:13px; line-height:1.5;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .wrap{max-width:1480px; margin:0 auto; padding:28px 22px 60px;}
+
+  /* ---- header ---- */
+  header.hero{
+    text-align:center; padding:34px 20px 26px; margin-bottom:18px;
+    border:1px solid var(--line); border-radius:22px;
+    background:linear-gradient(160deg,#1a1330 0%, #120f1c 60%, #0e1620 100%);
+    position:relative; overflow:hidden;
+  }
+  header.hero::after{content:"";position:absolute;inset:0;
+    background:radial-gradient(600px 200px at 50% 0,rgba(139,92,246,.18),transparent 70%);}
+  .hero h1{font-size:46px; margin:0; letter-spacing:.5px; font-weight:800;
+    background:linear-gradient(90deg,#c4b5fd,#8b5cf6,#22d3ee);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;}
+  .hero .sub{color:var(--sub); font-size:15px; margin-top:8px; letter-spacing:.3px;}
+  .hero .meta{color:#6f7488; font-size:11px; margin-top:12px; text-transform:uppercase; letter-spacing:2px;}
+
+  /* ---- legend + nav ---- */
+  .toolbar{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:16px 0 10px;}
+  .chip{font-size:11px; padding:6px 12px; border-radius:999px; border:1px solid var(--line);
+    background:var(--card); color:var(--sub); text-decoration:none; transition:.15s; white-space:nowrap;}
+  .chip:hover{color:#fff; border-color:var(--accent); transform:translateY(-1px);}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;color:var(--sub);font-size:11px;margin-bottom:8px;}
+  .legend b{color:var(--ink);}
+
+  /* ---- section ---- */
+  section{margin-top:34px; scroll-margin-top:16px;}
+  .sec-head{display:flex; align-items:center; gap:12px; margin:0 2px 14px;
+    padding-bottom:10px; border-bottom:2px solid var(--accent);}
+  .sec-head .ico{font-size:26px; filter:drop-shadow(0 0 8px color-mix(in srgb,var(--accent) 60%,transparent));}
+  .sec-head h2{margin:0; font-size:23px; font-weight:800; letter-spacing:.3px;}
+  .sec-head .kicker{margin-left:auto; color:var(--sub); font-size:11px; text-transform:uppercase; letter-spacing:2px;}
+  .part-band{margin-top:46px; text-align:center; color:var(--sub); font-size:12px; letter-spacing:5px; text-transform:uppercase;}
+  .part-band span{display:inline-block;padding:6px 18px;border:1px solid var(--line);border-radius:999px;background:var(--card);}
+
+  /* masonry-ish columns of cards */
+  .grid{column-gap:16px;}
+  .g3{column-width:430px;}
+  .g2{column-width:640px;}
+  .card{break-inside:avoid; background:var(--card); border:1px solid var(--line);
+    border-radius:14px; padding:14px 15px 13px; margin:0 0 16px;
+    box-shadow:0 1px 0 rgba(255,255,255,.02), 0 10px 30px -20px rgba(0,0,0,.8);}
+  .card.full{column-span:all;}
+  .card h3{margin:0 0 9px; font-size:14px; display:flex; align-items:center; gap:8px;
+    color:#fff; letter-spacing:.2px;}
+  .card h3::before{content:""; width:9px; height:9px; border-radius:3px; background:var(--accent);
+    box-shadow:0 0 10px var(--accent);}
+  .card h4{margin:12px 0 6px; font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent);}
+
+  /* tables */
+  table{width:100%; border-collapse:collapse; font-size:11.5px; margin:2px 0 4px;}
+  th,td{text-align:left; padding:5px 8px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{background:color-mix(in srgb,var(--accent) 16%, var(--card2));
+    color:#fff; font-weight:700; font-size:10.5px; text-transform:uppercase; letter-spacing:.6px;
+    position:sticky;}
+  tbody tr:nth-child(even){background:rgba(255,255,255,.018);}
+  tbody tr:hover{background:color-mix(in srgb,var(--accent) 9%, transparent);}
+  td b, td strong{color:#fff;}
+
+  /* snippet definition list */
+  .defs{margin:0; padding:0; list-style:none;}
+  .defs li{padding:4px 0; border-bottom:1px dashed rgba(255,255,255,.06);}
+  .defs li:last-child{border-bottom:none;}
+  .term{color:var(--accent); font-weight:700;}
+  .arrow{display:block; margin-top:3px; color:#7fd8c4; font-size:11px;}
+  .arrow::before{content:"→ "; color:var(--accent);}
+  code,.mono{font-family:"Consolas","SF Mono",ui-monospace,monospace; font-size:11px;
+    background:rgba(139,92,246,.12); color:#d8c9ff; padding:1px 5px; border-radius:5px;}
+  .tag{font-family:"Consolas",monospace; font-size:10.5px; background:var(--card2);
+    border:1px solid var(--line); color:#cbd5e1; padding:1px 6px; border-radius:5px; white-space:nowrap;}
+
+  /* section accent classes */
+  .s-harmony{--accent:var(--violet);}
+  .s-rhythm{--accent:var(--amber);}
+  .s-melody{--accent:var(--cyan);}
+  .s-psound{--accent:var(--emerald);}
+  .s-forms{--accent:var(--pink);}
+  .s-bridge{--accent:var(--gold);}
+  .s-console{--accent:var(--red);}
+  .s-card{--accent:var(--violet);}
+
+  .note{color:var(--sub); font-size:11px; margin:6px 0 0;}
+  .pill{display:inline-block;font-size:10px;padding:2px 8px;border-radius:999px;
+    background:color-mix(in srgb,var(--accent) 20%,transparent);color:#fff;border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);}
+  pre.lyric{background:#0c0c14;border:1px solid var(--line);border-radius:8px;padding:9px 11px;
+    font-family:"Consolas",monospace;font-size:11px;color:#cbd5e1;white-space:pre-wrap;margin:6px 0;}
+  .why{font-size:10.5px;color:var(--sub);font-style:italic;}
+
+  footer{margin-top:50px;text-align:center;color:#6f7488;font-size:11px;
+    border-top:1px solid var(--line);padding-top:20px;}
+
+  .printbtn{position:fixed;right:16px;bottom:16px;z-index:99;background:var(--violet);color:#fff;
+    border:none;border-radius:999px;padding:11px 18px;font-size:13px;font-weight:700;cursor:pointer;
+    box-shadow:0 8px 24px -8px rgba(139,92,246,.8);}
+  .printbtn:hover{filter:brightness(1.1);}
+  .topbtn{position:fixed;left:16px;bottom:16px;z-index:99;width:44px;height:44px;border-radius:50%;
+    background:var(--card2);color:var(--ink);border:1px solid var(--line);font-size:19px;cursor:pointer;}
+  .topbtn:hover{border-color:var(--violet);color:#fff;}
+  /* ---- diagrams ---- */
+  .viz{margin:6px 0 2px;}
+  .viz svg{width:100%;height:auto;display:block;}
+  .cap{font-size:10px;color:var(--sub);text-align:center;margin-top:3px;}
+  .freqbar{display:flex;height:36px;border-radius:8px;overflow:hidden;border:1px solid var(--line);margin:8px 0 4px;}
+  .freqbar div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:10px;line-height:1.15;color:#fff;font-weight:800;text-align:center;
+    text-shadow:0 1px 2px rgba(0,0,0,.9);}
+  .recipe .mono{display:block;margin:5px 0 0;font-size:10px;line-height:1.5;color:#e2d8ff;
+    background:rgba(139,92,246,.12);padding:8px 10px;border-radius:8px;}
+  .recipe .lead{font-weight:700;color:#fff;font-size:13px;}
+  .cmd{column-width:330px;column-gap:18px;margin-top:2px;counter-reset:c;}
+  .cmd div{break-inside:avoid;padding:4px 0;font-size:11.5px;counter-increment:c;color:var(--sub);}
+  .cmd div::before{content:counter(c);display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;
+    border-radius:50%;background:var(--accent);color:#0a0a0f;font-weight:800;font-size:10px;margin-right:8px;}
+  .cmd b{color:var(--ink);}
+  .card.full{overflow-x:auto;}
+  @media(max-width:640px){ .card.full table{min-width:560px;} }
+  @media print{ .printbtn,.topbtn,.toolbar{display:none;} body{background:#0c0c11;} .card{box-shadow:none;} }
+</style>
+</head>
+<body>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" title="Back to top">↑</button>
+<button class="printbtn" onclick="window.print()">🖨 Save / Print</button>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>🎼 The Bard's Codex</h1>
+    <div class="sub">A Complete Craft Cheat Sheet for <b>Music</b> &amp; <b>Poetry</b></div>
+    <div class="meta">Harmony · Rhythm · Melody · Genre · Meter · Rhyme · Form · Lyric · Prompt-craft</div>
+  </header>
+
+  <div class="legend">
+    <span><b class="mono">ˊ / CAPS</b> stressed</span>
+    <span><b class="mono">˘ / lower</b> unstressed</span>
+    <span><b>da-DUM</b> drummer-speak</span>
+    <span><b>I ii III</b> upper=major · lower=minor · °=dim</span>
+    <span><b style="color:var(--gold)">→</b> how to use / prompt phrasing</span>
+  </div>
+  <div class="toolbar">
+    <a class="chip" href="#harmony">🎹 Harmony</a>
+    <a class="chip" href="#rhythm">🥁 Rhythm &amp; Form</a>
+    <a class="chip" href="#melody">🎚️ Melody · Production · Genres</a>
+    <a class="chip" href="#psound">🪶 Poetic Sound</a>
+    <a class="chip" href="#forms">📜 Forms &amp; Figures</a>
+    <a class="chip" href="#bridge">🎤 Lyric &amp; Prompt Bridge</a>
+    <a class="chip" href="#recipes">⚡ Recipes</a>
+    <a class="chip" href="#console">🎛️ Emotional Console</a>
+    <a class="chip" href="#cheatcard">🃏 Cheat Card</a>
+  </div>
+
+  <!-- ======================= PART I ======================= -->
+  <div class="part-band"><span>Part I · Music</span></div>
+
+  <!-- HARMONY -->
+  <section id="harmony" class="s-harmony">
+    <div class="sec-head"><span class="ico">🎹</span><h2>Harmony &amp; Tonal Materials</h2><span class="kicker">which notes & why they feel</span></div>
+    <div class="grid g3">
+
+      <div class="card">
+        <h3>Intervals & their feeling</h3>
+        <table><thead><tr><th>Interval</th><th>½st</th><th>Feel</th></tr></thead><tbody>
+        <tr><td>min 2nd</td><td>1</td><td>tense, menacing (<i>Jaws</i>)</td></tr>
+        <tr><td>maj 2nd</td><td>2</td><td>gentle step, hopeful</td></tr>
+        <tr><td>min 3rd</td><td>3</td><td>sad, soulful</td></tr>
+        <tr><td>maj 3rd</td><td>4</td><td>bright, happy, stable</td></tr>
+        <tr><td>Perf 4th</td><td>5</td><td>strong, open, heroic</td></tr>
+        <tr><td>Tritone</td><td>6</td><td>unstable, evil, restless</td></tr>
+        <tr><td>Perf 5th</td><td>7</td><td>powerful, hollow (<i>Star Wars</i>)</td></tr>
+        <tr><td>min 6th</td><td>8</td><td>yearning, bittersweet</td></tr>
+        <tr><td>maj 6th</td><td>9</td><td>warm, sweet, open</td></tr>
+        <tr><td>min 7th</td><td>10</td><td>bluesy, tense</td></tr>
+        <tr><td>maj 7th</td><td>11</td><td>sharp longing, dreamy</td></tr>
+        <tr><td>Octave</td><td>12</td><td>bright, resolved</td></tr>
+        </tbody></table>
+        <p class="note"><b>Consonant</b> (rest): 8ve,5th,4th,3rds,6ths · <b>Dissonant</b> (tension): m2,M2,M7,tritone.</p>
+      </div>
+
+      <div class="card">
+        <h3>The 12 notes (one octave)</h3>
+        <div class="viz"><svg viewBox="0 0 280 96" role="img" aria-label="Piano octave">
+          <g stroke="#0c0c11" stroke-width="1.2">
+            <rect x="0"   y="2" width="40" height="90" rx="3" fill="#ECECF1"/>
+            <rect x="40"  y="2" width="40" height="90" rx="3" fill="#ECECF1"/>
+            <rect x="80"  y="2" width="40" height="90" rx="3" fill="#ECECF1"/>
+            <rect x="120" y="2" width="40" height="90" rx="3" fill="#ECECF1"/>
+            <rect x="160" y="2" width="40" height="90" rx="3" fill="#ECECF1"/>
+            <rect x="200" y="2" width="40" height="90" rx="3" fill="#ECECF1"/>
+            <rect x="240" y="2" width="40" height="90" rx="3" fill="#ECECF1"/>
+          </g>
+          <g fill="#3a2a5a" font-size="11" font-weight="700" text-anchor="middle" font-family="Segoe UI,sans-serif">
+            <text x="20" y="84">C</text><text x="60" y="84">D</text><text x="100" y="84">E</text>
+            <text x="140" y="84">F</text><text x="180" y="84">G</text><text x="220" y="84">A</text><text x="260" y="84">B</text></g>
+          <g fill="#16161f" stroke="#000">
+            <rect x="28"  y="2" width="24" height="56" rx="2.5"/>
+            <rect x="68"  y="2" width="24" height="56" rx="2.5"/>
+            <rect x="148" y="2" width="24" height="56" rx="2.5"/>
+            <rect x="188" y="2" width="24" height="56" rx="2.5"/>
+            <rect x="228" y="2" width="24" height="56" rx="2.5"/></g>
+          <g fill="#cbb9ff" font-size="7.5" text-anchor="middle" font-family="Segoe UI,sans-serif">
+            <text x="40" y="22">C♯</text><text x="80" y="22">D♯</text><text x="160" y="22">F♯</text>
+            <text x="200" y="22">G♯</text><text x="240" y="22">A♯</text></g>
+        </svg></div>
+        <p class="cap">12 semitones. No black key <b>E–F</b> or <b>B–C</b> — already a half-step apart.</p>
+      </div>
+
+      <div class="card">
+        <h3>The 7 modes <span class="pill">bright → dark</span></h3>
+        <table><thead><tr><th>Mode</th><th>Mood</th><th>Sig.</th><th>Genre</th></tr></thead><tbody>
+        <tr><td><b>Lydian</b></td><td>dreamy/magical</td><td>♯4</td><td>film, prog</td></tr>
+        <tr><td><b>Ionian</b> (maj)</td><td>happy</td><td>—</td><td>pop, folk</td></tr>
+        <tr><td><b>Mixolydian</b></td><td>bluesy/groovy</td><td>♭7</td><td>rock, funk</td></tr>
+        <tr><td><b>Dorian</b></td><td>hopeful-sad</td><td>♮6</td><td>jazz, folk</td></tr>
+        <tr><td><b>Aeolian</b> (min)</td><td>sad</td><td>♭6</td><td>ballad, metal</td></tr>
+        <tr><td><b>Phrygian</b></td><td>Spanish/menace</td><td>♭2</td><td>flamenco, metal</td></tr>
+        <tr><td><b>Locrian</b></td><td>unstable</td><td>♭2 ♭5</td><td>rare color</td></tr>
+        </tbody></table>
+        <div class="viz"><svg viewBox="0 0 300 50" role="img" aria-label="Mode brightness scale">
+          <defs><linearGradient id="mb" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#a5f3fc"/><stop offset="0.34" stop-color="#c4b5fd"/>
+            <stop offset="0.62" stop-color="#8b5cf6"/><stop offset="1" stop-color="#2e1065"/></linearGradient></defs>
+          <rect x="4" y="6" width="292" height="13" rx="6.5" fill="url(#mb)"/>
+          <g font-size="9" fill="#ECECF1" text-anchor="middle" font-family="Segoe UI,sans-serif" font-weight="600">
+            <text x="25" y="34">Lyd</text><text x="66" y="34">Ion</text><text x="107" y="34">Mix</text>
+            <text x="150" y="34">Dor</text><text x="193" y="34">Aeo</text><text x="234" y="34">Phr</text><text x="275" y="34">Loc</text></g>
+          <g font-size="8" fill="#9aa0b0"><text x="4" y="47">◀ brightest</text><text x="296" y="47" text-anchor="end">darkest ▶</text></g>
+        </svg></div>
+        <p class="note">Each step right flattens one more note. <b>Lyd·Ion·Mixo·Dor·Aeo·Phryg·Locr</b>.</p>
+      </div>
+
+      <div class="card">
+        <h3>Scales</h3>
+        <ul class="defs">
+          <li><span class="term">Major</span> W-W-H-W-W-W-H — bright, resolved</li>
+          <li><span class="term">Nat. minor</span> W-H-W-W-H-W-W — sad, dark</li>
+          <li><span class="term">Harmonic minor</span> raised 7 — exotic, strong V</li>
+          <li><span class="term">Melodic minor</span> raised 6&amp;7 up — jazzy</li>
+          <li><span class="term">Maj pentatonic</span> 1 2 3 5 6 — open, folk</li>
+          <li><span class="term">Min pentatonic</span> 1 ♭3 4 5 ♭7 — rock/blues, "can't be wrong"</li>
+          <li><span class="term">Blues</span> min pent + ♭5 — gritty, vocal</li>
+          <li><span class="term">Whole-tone</span> all W (6) — dreamy, no tonic</li>
+          <li><span class="term">Diminished</span> alt W-H (8) — tension, horror</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Chords (stacked 3rds)</h3>
+        <table><thead><tr><th>Type</th><th>Formula</th><th>Vibe</th></tr></thead><tbody>
+        <tr><td>Major</td><td>1 3 5</td><td>happy</td></tr>
+        <tr><td>Minor</td><td>1 ♭3 5</td><td>sad</td></tr>
+        <tr><td>Dim</td><td>1 ♭3 ♭5</td><td>tense, unstable</td></tr>
+        <tr><td>Aug</td><td>1 3 ♯5</td><td>dreamy, eerie</td></tr>
+        <tr><td>maj7</td><td>1 3 5 7</td><td>lush, jazzy</td></tr>
+        <tr><td>min7</td><td>1 ♭3 5 ♭7</td><td>smooth, soul</td></tr>
+        <tr><td>dom7</td><td>1 3 5 ♭7</td><td>bluesy, wants home</td></tr>
+        <tr><td>°7</td><td>1 ♭3 ♭5 ♭♭7</td><td>max tension, pivot</td></tr>
+        </tbody></table>
+        <p class="note"><b>Ext:</b> 9·11·13 = color · <b>sus2/4</b> = suspended · <b>add9</b> = pop sparkle · <b>slash C/G</b> = bass control.</p>
+      </div>
+
+      <div class="card">
+        <h3>Function & cadences</h3>
+        <p class="note" style="margin-top:0"><b>T → PD → D → T</b> is the engine. Tonic <span class="mono">I vi iii</span> rest · Predominant <span class="mono">IV ii</span> move · Dominant <span class="mono">V vii°</span> tension.</p>
+        <table><thead><tr><th>Cadence</th><th>Move</th><th>Sound</th></tr></thead><tbody>
+        <tr><td>Authentic</td><td>V→I</td><td>full stop</td></tr>
+        <tr><td>Plagal</td><td>IV→I</td><td>"amen," gentle</td></tr>
+        <tr><td>Half</td><td>→V</td><td>question, unresolved</td></tr>
+        <tr><td>Deceptive</td><td>V→vi</td><td>fake-out, extends</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="card">
+        <h3>Progression catalog</h3>
+        <table><thead><tr><th>Numerals</th><th>Name / vibe</th></tr></thead><tbody>
+        <tr><td><b>I–V–vi–IV</b></td><td>Axis "4 chords" — anthemic pop</td></tr>
+        <tr><td><b>vi–IV–I–V</b></td><td>sad axis — yearning</td></tr>
+        <tr><td><b>I–vi–IV–V</b></td><td>'50s doo-wop — nostalgic</td></tr>
+        <tr><td><b>I–IV–V</b></td><td>3-chord — rock/country/punk</td></tr>
+        <tr><td><b>12-bar blues</b></td><td>I-IV-V form — gritty classic</td></tr>
+        <tr><td><b>ii–V–I</b></td><td>jazz turnaround — smooth</td></tr>
+        <tr><td><b>i–♭VII–♭VI–V</b></td><td>Andalusian — dark, descending</td></tr>
+        <tr><td><b>IV–V–iii–vi</b></td><td>Royal Road — bittersweet J-pop</td></tr>
+        <tr><td><b>i–VI–III–VII</b></td><td>minor axis — epic, brooding</td></tr>
+        <tr><td><b>♭VI–♭VII–i</b></td><td>Aeolian cadence — triumphant-dark</td></tr>
+        <tr><td><b>I–♭VII–IV</b></td><td>Mixolydian — loose, groovy</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="card">
+        <h3>Circle of 5ths & color moves</h3>
+        <div class="viz"><svg viewBox="0 0 300 300" role="img" aria-label="Circle of fifths wheel">
+          <circle cx="150" cy="150" r="139" fill="none" stroke="#2a2a3a"/>
+          <circle cx="150" cy="150" r="104" fill="none" stroke="#2a2a3a"/>
+          <circle cx="150" cy="150" r="64" fill="#13131d" stroke="#5b3fa6"/>
+          <g fill="#ECECF1" font-weight="700" font-size="15" text-anchor="middle" font-family="Segoe UI,sans-serif">
+            <text x="150" y="35">C</text><text x="210" y="51">G</text><text x="253.9" y="95">D</text>
+            <text x="270" y="155">A</text><text x="253.9" y="215">E</text><text x="210" y="258.9">B</text>
+            <text x="150" y="275">F♯</text><text x="90" y="258.9">D♭</text><text x="46.1" y="215">A♭</text>
+            <text x="30" y="155">E♭</text><text x="46.1" y="95">B♭</text><text x="90" y="51">F</text>
+          </g>
+          <g fill="#9aa0b0" font-size="10.5" text-anchor="middle" font-family="Segoe UI,sans-serif">
+            <text x="150" y="69">Am</text><text x="192.5" y="80">Em</text><text x="223.6" y="111">Bm</text>
+            <text x="235" y="154">F♯m</text><text x="223.6" y="196">C♯m</text><text x="192.5" y="227">G♯m</text>
+            <text x="150" y="239">D♯m</text><text x="107.5" y="227">B♭m</text><text x="76.4" y="196">Fm</text>
+            <text x="65" y="154">Cm</text><text x="76.4" y="111">Gm</text><text x="107.5" y="80">Dm</text>
+          </g>
+          <text x="150" y="147" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="800">♭ ⟲ ♯</text>
+          <text x="150" y="162" text-anchor="middle" fill="#9aa0b0" font-size="9" letter-spacing="1">5THS</text>
+        </svg></div>
+        <p class="cap">Outer = major · inner = relative minor · ↻ each step = +1 ♯ (←♭)</p>
+        <p class="note" style="margin-top:6px"><b>Sharps:</b> F C G D A E B · <b>Flats:</b> reverse. Adjacent keys = smoothest modulation. <b>Relative</b> = same notes (C↔Am) · <b>Parallel</b> = same root, swap mode (C↔Cm).</p>
+        <ul class="defs">
+          <li><span class="term">Borrowed iv</span> in major — "saddest chord"</li>
+          <li><span class="term">♭VII / ♭VI / ♭III</span> — rock & cinematic lift</li>
+          <li><span class="term">Picardy 3rd</span> — end minor on major = hope</li>
+          <li><span class="term">Secondary dom V/V</span> — extra forward pull</li>
+          <li><span class="term">Tritone sub</span> — chromatic jazz bass</li>
+          <li><span class="term">Pedal point</span> — drone under shifting chords</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- RHYTHM -->
+  <section id="rhythm" class="s-rhythm">
+    <div class="sec-head"><span class="ico">🥁</span><h2>Rhythm, Meter, Form &amp; Arrangement</h2><span class="kicker">which beats & how they group</span></div>
+    <div class="grid g3">
+
+      <div class="card">
+        <h3>Meter & feel</h3>
+        <table><thead><tr><th>Type</th><th>Divides</th><th>Examples / feel</th></tr></thead><tbody>
+        <tr><td>Simple</td><td>by 2</td><td>2/4 3/4 <b>4/4</b> — square</td></tr>
+        <tr><td>Compound</td><td>by 3</td><td>6/8 9/8 12/8 — rolling/lilt</td></tr>
+        <tr><td>Complex</td><td>uneven</td><td>5/4 7/8 11/8 — lurch</td></tr>
+        </tbody></table>
+        <p class="note"><b>6/8</b> = 2 big beats of 3 (don't count all 6). <b>Backbeat</b> = snare on 2 &amp; 4. <b>Anacrusis</b> = pickup before beat 1.</p>
+        <h4>Swing</h4>
+        <p class="note" style="margin-top:0">Straight 1:1 · light ~1.5:1 · hard shuffle 2:1 (triplet). <b>Pocket</b> = drums+bass locked. <b>Behind</b> = soulful, <b>ahead</b> = urgent.</p>
+      </div>
+
+      <div class="card">
+        <h3>Tempo (BPM → feel)</h3>
+        <table><thead><tr><th>BPM</th><th>Feel</th><th>Genres</th></tr></thead><tbody>
+        <tr><td>40–60</td><td>vast, meditative</td><td>ambient, doom</td></tr>
+        <tr><td>60–80</td><td>slow, intimate</td><td>ballad, ½-time hip-hop</td></tr>
+        <tr><td>76–108</td><td>walking groove</td><td>hip-hop, reggae</td></tr>
+        <tr><td>108–120</td><td>head-nod (pop)</td><td>pop, rock</td></tr>
+        <tr><td>120–128</td><td>driving dance</td><td>house, disco</td></tr>
+        <tr><td>128–140</td><td>peak-club</td><td>trance, techno</td></tr>
+        <tr><td>140–160</td><td>intense</td><td>dubstep (½), DnB</td></tr>
+        <tr><td>165–180</td><td>frantic</td><td>drum & bass</td></tr>
+        </tbody></table>
+        <p class="note"><b>rubato</b> stolen time · <b>accel./rit.</b> speed up/down · <b>fermata</b> hold.</p>
+      </div>
+
+      <div class="card">
+        <h3>Syncopation & cross-rhythm</h3>
+        <ul class="defs">
+          <li><span class="term">Syncopation</span> accent the "&amp;" offbeats — funk/reggae/Latin</li>
+          <li><span class="term">Anticipation</span> hit just before the beat — pushes energy</li>
+          <li><span class="term">Polyrhythm 3:2</span> 3 against 2 ("nice-cup-of-tea")</li>
+          <li><span class="term">Polymeter</span> two meters at once, realign at LCM</li>
+          <li><span class="term">Hemiola</span> regroup 2×3/4 as 3×2/4</li>
+        </ul>
+        <h4>Dynamics & articulation</h4>
+        <p class="note" style="margin-top:0"><span class="mono">pp p mp mf f ff</span> · cresc. <span class="mono">&lt;</span> / dim. <span class="mono">&gt;</span>. Staccato=short, legato=smooth, marcato=forceful. <b>Subtract layers before a big hit.</b></p>
+      </div>
+
+      <div class="card">
+        <h3>Song sections & jobs</h3>
+        <table><thead><tr><th>Section</th><th>Job</th></tr></thead><tbody>
+        <tr><td><b>Intro</b></td><td>set mood, pull in</td></tr>
+        <tr><td><b>Verse</b></td><td>advance the story (most words)</td></tr>
+        <tr><td><b>Pre-chorus</b></td><td>lift / build tension</td></tr>
+        <tr><td><b>Chorus</b></td><td>peak + title + payoff</td></tr>
+        <tr><td><b>Post-chorus</b></td><td>extra hook, ride the high</td></tr>
+        <tr><td><b>Bridge</b></td><td>contrast / the turn</td></tr>
+        <tr><td><b>Drop</b></td><td>EDM payoff after build</td></tr>
+        <tr><td><b>Build/riser</b></td><td>rising tension → drop</td></tr>
+        <tr><td><b>Outro</b></td><td>resolve / fade</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="card">
+        <h3>Song forms</h3>
+        <table><thead><tr><th>Form</th><th>Shape</th></tr></thead><tbody>
+        <tr><td>Verse–Chorus</td><td>V-C-V-C-Br-C (pop default)</td></tr>
+        <tr><td>AABA (32-bar)</td><td>jazz standards</td></tr>
+        <tr><td>12-bar blues</td><td>I-I-I-I-IV-IV-I-I-V-IV-I-V</td></tr>
+        <tr><td>Strophic AAA</td><td>same music, new verses (folk)</td></tr>
+        <tr><td>Through-composed</td><td>no repeats ("Bohemian Rhapsody")</td></tr>
+        <tr><td>EDM build–drop</td><td>intro-build-drop-break-build-drop</td></tr>
+        </tbody></table>
+        <h4>Arrangement laws</h4>
+        <p class="note" style="margin-top:0"><b>Tension &amp; release</b> · <b>contrast</b> every section · <b>each chorus bigger</b> than the last · everything owns a <b>frequency lane</b>.</p>
+      </div>
+
+      <div class="card">
+        <h3>Energy arc (3½-min pop)</h3>
+        <div class="viz"><svg viewBox="0 0 300 84" role="img" aria-label="Song energy arc">
+          <defs><linearGradient id="ea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f59e0b" stop-opacity="0.5"/><stop offset="1" stop-color="#f59e0b" stop-opacity="0"/></linearGradient></defs>
+          <path d="M6,62 L38,52 64,36 92,16 122,50 146,34 174,15 206,42 240,8 292,58 L292,72 L6,72 Z" fill="url(#ea)"/>
+          <polyline points="6,62 38,52 64,36 92,16 122,50 146,34 174,15 206,42 240,8 292,58" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linejoin="round"/>
+          <g fill="#fbbf24"><circle cx="92" cy="16" r="2.6"/><circle cx="174" cy="15" r="2.6"/><circle cx="240" cy="8" r="3.4"/></g>
+          <g fill="#9aa0b0" font-size="7.5" font-family="Segoe UI,sans-serif">
+            <text x="6" y="82">intro</text><text x="78" y="12">chorus</text><text x="186" y="54">bridge</text>
+            <text x="216" y="82">FINAL ↑</text></g>
+        </svg></div>
+        <table><thead><tr><th>Sec</th><th>Energy</th></tr></thead><tbody>
+        <tr><td>Intro</td><td>▂</td></tr>
+        <tr><td>Verse 1</td><td>▃</td></tr>
+        <tr><td>Pre-chorus</td><td>▅</td></tr>
+        <tr><td>Chorus 1</td><td>▇</td></tr>
+        <tr><td>Verse 2</td><td>▃ (drop back, +1 texture)</td></tr>
+        <tr><td>Chorus 2</td><td>▇</td></tr>
+        <tr><td>Bridge</td><td>▄ (strip → rebuild)</td></tr>
+        <tr><td>Final chorus</td><td>█ (key change / octave)</td></tr>
+        <tr><td>Outro</td><td>▂</td></tr>
+        </tbody></table>
+        <p class="note">Tags: <span class="tag">[Intro]</span> <span class="tag">[Verse]</span> <span class="tag">[Pre-Chorus]</span> <span class="tag">[Chorus]</span> <span class="tag">[Bridge]</span> <span class="tag">[Build]</span> <span class="tag">[Drop]</span> <span class="tag">[Outro]</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MELODY / PRODUCTION / GENRE -->
+  <section id="melody" class="s-melody">
+    <div class="sec-head"><span class="ico">🎚️</span><h2>Melody, Production &amp; Genre Cheat-Codes</h2><span class="kicker">the tune, the texture, the recipes</span></div>
+    <div class="grid g3">
+
+      <div class="card">
+        <h3>Melody & the hook</h3>
+        <ul class="defs">
+          <li><span class="term">Motif</span> 2–7 note DNA cell, repeated &amp; varied</li>
+          <li><span class="term">Contour</span> ascending=lift · descending=release · arch=satisfying · wave=conversational · static=hypnotic/rap</li>
+          <li><span class="term">Conjunct</span> stepwise = singable · <span class="term">Disjunct</span> leaps = drama (one signature octave leap)</li>
+          <li><span class="term">Tension tones</span> 7/9/sus/blue notes = ache</li>
+        </ul>
+        <p class="note"><b>Earworm =</b> singable + distinctive rhythm + simple contour + tension→resolution + repetition-with-twist.</p>
+      </div>
+
+      <div class="card">
+        <h3>Frequency spectrum (mix lanes)</h3>
+        <div class="freqbar">
+          <div style="background:#6d1f3f">Sub<span>20-60</span></div>
+          <div style="background:#b03a48">Bass<span>60-250</span></div>
+          <div style="background:#d97706">LoMid<span>250-500</span></div>
+          <div style="background:#ca9a04">Mid<span>.5-2k</span></div>
+          <div style="background:#65a30d">HiMid<span>2-6k</span></div>
+          <div style="background:#0891b2">High<span>6-12k</span></div>
+          <div style="background:#56b6e8">Air<span>12-20k</span></div>
+        </div>
+        <table><thead><tr><th>Band</th><th>Hz</th><th>Who lives there</th></tr></thead><tbody>
+        <tr><td>Sub</td><td>20–60</td><td>808/sub — feel, mono it</td></tr>
+        <tr><td>Bass</td><td>60–250</td><td>bass+kick — power/warmth</td></tr>
+        <tr><td>Low-mid</td><td>250–500</td><td>body — "mud zone," cut</td></tr>
+        <tr><td>Mid</td><td>.5–2k</td><td>vocal core — the heart</td></tr>
+        <tr><td>Hi-mid</td><td>2–6k</td><td>clarity/bite (can be harsh)</td></tr>
+        <tr><td>Highs</td><td>6–12k</td><td>cymbals, sibilance, sheen</td></tr>
+        <tr><td>Air</td><td>12–20k</td><td>sparkle, breath</td></tr>
+        </tbody></table>
+        <p class="note">Every part owns a lane; cut where another needs to shine.</p>
+      </div>
+
+      <div class="card">
+        <h3>Production vocab</h3>
+        <ul class="defs">
+          <li><span class="term">Compression</span> threshold·ratio·attack·release — punch/glue</li>
+          <li><span class="term">Sidechain</span> duck by kick = EDM "pump"</li>
+          <li><span class="term">Reverb</span> room·hall·plate·spring (space)</li>
+          <li><span class="term">Delay</span> slapback·ping-pong·dotted-⅛</li>
+          <li><span class="term">Grit</span> saturation→overdrive→distortion→fuzz→bitcrush</li>
+          <li><span class="term">Mod FX</span> chorus(widen)·flanger(jet)·phaser(swirl)</li>
+          <li><span class="term">Synth</span> osc(saw/square/sine)·filter(cutoff/res)·ADSR·LFO</li>
+          <li><span class="term">Vocals</span> double · harmony stack · ad-libs · autotune · de-ess</li>
+        </ul>
+      </div>
+
+      <div class="card full">
+        <h3>🎛️ Genre Cheat-Codes <span class="pill">BPM · key · sound · groove · prompt seed</span></h3>
+        <table><thead><tr><th>Genre</th><th>BPM</th><th>Key/Mode</th><th>Signature sounds</th><th>Groove</th><th>Suno prompt seed</th></tr></thead><tbody>
+        <tr><td><b>Pop</b></td><td>100–130</td><td>Major</td><td>synths, piano, polished vox</td><td>tight, danceable</td><td>modern pop, bright synths, punchy drums, huge catchy chorus, polished female vocal</td></tr>
+        <tr><td><b>Rock</b></td><td>110–140</td><td>Maj/Mixo</td><td>electric gtrs, organ, live drums</td><td>backbeat 2&amp;4</td><td>classic rock, crunchy guitars, driving drums, anthemic chorus, Hammond organ</td></tr>
+        <tr><td><b>Indie/Alt</b></td><td>100–135</td><td>modal</td><td>jangly reverb gtrs, vintage synth</td><td>loose, organic</td><td>indie rock, jangly reverb-drenched guitars, lo-fi warmth, melancholy male vocal</td></tr>
+        <tr><td><b>Pop-punk</b></td><td>150–200</td><td>Major</td><td>distorted power chords</td><td>fast straight-8</td><td>pop-punk, fast power chords, snotty vocals, gang-vocal chorus, 180 bpm</td></tr>
+        <tr><td><b>Metal</b></td><td>90–200</td><td>Phryg/min</td><td>down-tuned gtrs, double-kick</td><td>palm-mute chug</td><td>modern metal, down-tuned palm-muted riffs, double-bass drums, screamed vocals</td></tr>
+        <tr><td><b>Boom-bap</b></td><td>85–95</td><td>Minor</td><td>soul sample, vinyl, punchy drums</td><td>swung backbeat</td><td>90s boom-bap, dusty jazz sample, punchy kick & snare, vinyl crackle, lyrical flow</td></tr>
+        <tr><td><b>Trap</b></td><td>130–150 (½)</td><td>Minor</td><td>808 sub, triplet hats, bell stabs</td><td>half-time, sparse</td><td>trap, booming 808 bass, rapid hi-hat triplets, dark minor melody, half-time drums</td></tr>
+        <tr><td><b>Lo-fi</b></td><td>70–90</td><td>maj7/jazzy</td><td>Rhodes, vinyl hiss, soft drums</td><td>swung, sleepy</td><td>lo-fi hip-hop, mellow jazzy Rhodes, vinyl crackle, soft swung drums, rainy mood</td></tr>
+        <tr><td><b>R&amp;B / Neo-soul</b></td><td>60–100</td><td>9/11/13 chords</td><td>smooth keys, sub, lush vox</td><td>deep pocket</td><td>neo-soul, lush extended chords, warm Rhodes, deep pocket drums, silky vocals with runs</td></tr>
+        <tr><td><b>Funk</b></td><td>100–120</td><td>dom7 vamp</td><td>slap bass, wah clav, horns</td><td>"on the one"</td><td>classic funk, slap bass, wah guitar, tight horn stabs, groove on the one</td></tr>
+        <tr><td><b>Jazz</b></td><td>60–220</td><td>ii-V-I, modal</td><td>upright bass, brushes, piano</td><td>swing, walking</td><td>smooth jazz quartet, walking upright bass, brushed drums, muted trumpet solo</td></tr>
+        <tr><td><b>Blues</b></td><td>60–120</td><td>blues, dom7</td><td>slide gtr, harmonica, organ</td><td>12/8 shuffle</td><td>slow electric blues, soulful guitar bends, 12-bar shuffle, Hammond organ, gritty vocal</td></tr>
+        <tr><td><b>Country</b></td><td>90–130</td><td>Major I-IV-V</td><td>acoustic, pedal steel, fiddle</td><td>two-step</td><td>modern country, acoustic guitar, weeping pedal steel, fiddle, warm storytelling vocal</td></tr>
+        <tr><td><b>Folk</b></td><td>70–120</td><td>open Major</td><td>fingerpicked acoustic, voice</td><td>gentle</td><td>intimate folk, fingerpicked guitar, soft male vocal, subtle strings, confessional lyrics</td></tr>
+        <tr><td><b>Gospel</b></td><td>70–130</td><td>rich Major</td><td>Hammond, piano, choir</td><td>swung, building</td><td>uplifting gospel, Hammond organ, full choir harmonies, soaring lead, key-change climax</td></tr>
+        <tr><td><b>House</b></td><td>120–128</td><td>min/maj vamp</td><td>4-on-floor, off-beat hats, pads</td><td>steady pump</td><td>deep house, four-on-the-floor kick, off-beat hats, sidechained pads, soulful vocal chops</td></tr>
+        <tr><td><b>Techno</b></td><td>125–140</td><td>dark minor</td><td>driving kick, acid synth</td><td>hypnotic 4/4</td><td>driving techno, pounding kick, hypnotic acid synth, industrial perc, dark and raw</td></tr>
+        <tr><td><b>Trance</b></td><td>132–142</td><td>uplifting min</td><td>supersaw lead, rolling bass</td><td>big builds</td><td>uplifting trance, soaring supersaw lead, rolling bassline, euphoric breakdown</td></tr>
+        <tr><td><b>Drum &amp; Bass</b></td><td>165–180</td><td>dark minor</td><td>breakbeats, reese/sub bass</td><td>fast breaks</td><td>liquid DnB, fast chopped breakbeats, deep rolling sub-bass, lush atmospheric pads</td></tr>
+        <tr><td><b>Dubstep</b></td><td>140 (½)</td><td>dark minor</td><td>wobble bass, huge sub</td><td>½-time, drop b3</td><td>dubstep, heavy wobble bass, half-time drums, massive sub, build into a huge drop</td></tr>
+        <tr><td><b>Synthwave</b></td><td>80–118</td><td>80s minor</td><td>analog synths, gated snare, arps</td><td>steady retro</td><td>synthwave, lush analog synths, gated reverb snare, driving arpeggios, neon 80s mood</td></tr>
+        <tr><td><b>Ambient</b></td><td>0–70</td><td>suspended</td><td>evolving pads, drones, field rec</td><td>beatless</td><td>ambient drone, slowly evolving pads, ethereal textures, deep reverb, meditative</td></tr>
+        <tr><td><b>Cinematic</b></td><td>60–140</td><td>modal/minor</td><td>orchestra, choir, taikos</td><td>building swells</td><td>epic cinematic orchestral, soaring strings, brass, choir, thunderous percussion, building</td></tr>
+        <tr><td><b>Reggae/Dub</b></td><td>60–90</td><td>maj/min vamp</td><td>skank gtr, deep bass, spring verb</td><td>one-drop, off-beat</td><td>roots reggae, off-beat skank guitar, deep dub bass, one-drop drums, organ bubble</td></tr>
+        <tr><td><b>Reggaeton</b></td><td>88–96</td><td>Minor</td><td>dembow, synth bass</td><td>boom-ch-boom-chick</td><td>reggaeton, dembow rhythm, deep synth bass, catchy Spanish vocal hook, club energy</td></tr>
+        <tr><td><b>Salsa</b></td><td>150–250</td><td>montuno</td><td>piano montuno, horns, congas</td><td>clave-driven</td><td>classic salsa, piano montuno, blazing horns, congas & timbales, clave, energetic vocal</td></tr>
+        <tr><td><b>Bardcore</b></td><td>90–130</td><td>Dorian/Aeo</td><td>lute, hurdy-gurdy, recorder</td><td>6/8 lilt</td><td>bardcore, lute and harp, recorder melody, hurdy-gurdy drone, Dorian, medieval tavern feel</td></tr>
+        </tbody></table>
+        <p class="note">🪄 <b>Universal recipe:</b> <span class="mono">[genre] + [BPM/feel] + [2–3 instruments w/ timbre] + [groove] + [vocal] + [mood]</span> — three vivid adjectives beat ten vague ones.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= PART II ======================= -->
+  <div class="part-band"><span>Part II · Poetry</span></div>
+
+  <!-- POETIC SOUND -->
+  <section id="psound" class="s-psound">
+    <div class="sec-head"><span class="ico">🪶</span><h2>Poetic Sound — Meter, Rhyme &amp; Devices</h2><span class="kicker">how a line lands in the ear</span></div>
+    <div class="grid g3">
+
+      <div class="card">
+        <h3>Metrical feet</h3>
+        <table><thead><tr><th>Foot</th><th>Pattern</th><th>Feel / use</th></tr></thead><tbody>
+        <tr><td><b>Iamb</b></td><td>da-DUM</td><td>conversational verse</td></tr>
+        <tr><td><b>Trochee</b></td><td>DUM-da</td><td>chant, hook, downbeat</td></tr>
+        <tr><td><b>Spondee</b></td><td>DUM-DUM</td><td>weight, stabs, brakes</td></tr>
+        <tr><td><b>Pyrrhic</b></td><td>da-da</td><td>fast filler</td></tr>
+        <tr><td><b>Anapest</b></td><td>da-da-DUM</td><td>gallop, 6/8 swing</td></tr>
+        <tr><td><b>Dactyl</b></td><td>DUM-da-da</td><td>waltz, tumbling</td></tr>
+        <tr><td><b>Amphibrach</b></td><td>da-DUM-da</td><td>lilting, limerick</td></tr>
+        <tr><td><b>Cretic</b></td><td>DUM-da-DUM</td><td>emphatic slogan</td></tr>
+        <tr><td><b>Molossus</b></td><td>DUM-DUM-DUM</td><td>max weight, shout</td></tr>
+        </tbody></table>
+        <p class="note"><b>Lines:</b> di·tri·<b>tetra(4)</b>·<b>penta(5)</b>·hexa·hepta·octameter. Most singable = <b>tetra + tri</b> alternating.</p>
+      </div>
+
+      <div class="card">
+        <h3>Named meters & variation</h3>
+        <ul class="defs">
+          <li><span class="term">Iambic pentameter</span> 5 iambs ("shall I com-PARE thee…")</li>
+          <li><span class="term">Ballad / common meter</span> <b>8.6.8.6, ABCB</b> — half of all songs</li>
+          <li><span class="term">Blank verse</span> unrhymed iambic pentameter</li>
+          <li><span class="term">Free verse</span> no meter, no rhyme</li>
+        </ul>
+        <h4>Anti-robot variation</h4>
+        <p class="note" style="margin-top:0"><b>Trochaic inversion</b> (flip line-start), <b>spondaic</b> brake, <b>catalexis</b> (drop final slack → end on stress), <b>feminine ending</b> (extra weak syllable = pickup note). Perfect meter = robotic; <b>break it where the melody breathes</b>.</p>
+      </div>
+
+      <div class="card">
+        <h3>Rhyme types</h3>
+        <table><thead><tr><th>Type</th><th>Example</th></tr></thead><tbody>
+        <tr><td>Perfect</td><td>cat / hat</td></tr>
+        <tr><td>Slant / near</td><td>shape / keep</td></tr>
+        <tr><td>Assonant (vowel)</td><td>lake / fate</td></tr>
+        <tr><td>Consonant</td><td>bell / ball</td></tr>
+        <tr><td>Mosaic / broken</td><td>poet / know it</td></tr>
+        <tr><td>Feminine (2-syl)</td><td>motion / ocean</td></tr>
+        <tr><td>Multisyllabic</td><td>area / scarier</td></tr>
+        <tr><td>Internal</td><td>rhyme inside a line</td></tr>
+        <tr><td>Eye (visual)</td><td>love / move</td></tr>
+        </tbody></table>
+        <p class="note"><b>Schemes:</b> ABAB cross · AABB couplet · ABBA envelope · ABCB ballad · terza rima ABA-BCB.</p>
+      </div>
+
+      <div class="card">
+        <h3>Sound texture & flow</h3>
+        <ul class="defs">
+          <li><span class="term">Alliteration</span> initial consonants — grabby hooks</li>
+          <li><span class="term">Assonance</span> repeated vowels — inner glue</li>
+          <li><span class="term">Consonance / sibilance</span> repeated consonants / s-hiss</li>
+          <li><span class="term">Plosives</span> p·b·t·d·k·g — punch, anger</li>
+          <li><span class="term">Liquids</span> l·r·m·n — flowing, singable</li>
+          <li><span class="term">Euphony / cacophony</span> smooth vs harsh</li>
+        </ul>
+        <h4>Lineation</h4>
+        <p class="note" style="margin-top:0"><b>End-stopped</b> sits inside the bar · <b>enjambment</b> spills across it (drive) · <b>caesura</b> = mid-line pause (the ad-lib slot).</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FORMS & FIGURES -->
+  <section id="forms" class="s-forms">
+    <div class="sec-head"><span class="ico">📜</span><h2>Forms, Figurative Language &amp; Rhetoric</h2><span class="kicker">shape & meaning</span></div>
+    <div class="grid g3">
+
+      <div class="card">
+        <h3>Fixed forms</h3>
+        <table><thead><tr><th>Form</th><th>Spec</th></tr></thead><tbody>
+        <tr><td><b>Sonnet (Shak.)</b></td><td>14 · iambic pent · ABAB CDCD EFEF GG · volta</td></tr>
+        <tr><td><b>Petrarchan</b></td><td>octave+sestet · turn at L9</td></tr>
+        <tr><td><b>Villanelle</b></td><td>19 · 2 refrains · ABA</td></tr>
+        <tr><td><b>Sestina</b></td><td>6 sixains + envoi · rotating end-words</td></tr>
+        <tr><td><b>Pantoum</b></td><td>quatrains · repeating lines</td></tr>
+        <tr><td><b>Ghazal</b></td><td>couplets · radif refrain</td></tr>
+        <tr><td><b>Haiku</b></td><td>5-7-5 · season + cut</td></tr>
+        <tr><td><b>Tanka</b></td><td>5-7-5-7-7</td></tr>
+        <tr><td><b>Limerick</b></td><td>5 · anapestic · AABBA</td></tr>
+        <tr><td><b>Ballad</b></td><td>quatrains · 8.6.8.6 · ABCB</td></tr>
+        <tr><td><b>Terza rima</b></td><td>tercets · ABA BCB CDC</td></tr>
+        <tr><td><b>Blank / free verse</b></td><td>metered-unrhymed / neither</td></tr>
+        <tr><td><b>Golden shovel</b></td><td>borrowed line down right margin</td></tr>
+        <tr><td><b>Erasure</b></td><td>redact a source into a poem</td></tr>
+        </tbody></table>
+        <p class="note"><b>Stanzas:</b> couplet·tercet·<b>quatrain</b>(workhorse)·quintain·sestet·octave.</p>
+      </div>
+
+      <div class="card">
+        <h3>Figurative language</h3>
+        <table><thead><tr><th>Device</th><th>Def</th></tr></thead><tbody>
+        <tr><td>Metaphor</td><td>A <i>is</i> B</td></tr>
+        <tr><td>Simile</td><td>A <i>like/as</i> B</td></tr>
+        <tr><td>Conceit</td><td>one metaphor, sustained</td></tr>
+        <tr><td>Metonymy</td><td>"the crown" = monarch</td></tr>
+        <tr><td>Synecdoche</td><td>part = whole ("hands")</td></tr>
+        <tr><td>Personification</td><td>human traits → object</td></tr>
+        <tr><td>Hyperbole</td><td>overstatement</td></tr>
+        <tr><td>Litotes</td><td>"not bad" = great</td></tr>
+        <tr><td>Irony</td><td>verbal / situational / dramatic</td></tr>
+        <tr><td>Oxymoron / paradox</td><td>"bittersweet" / "less is more"</td></tr>
+        <tr><td>Apostrophe</td><td>address the absent/dead</td></tr>
+        <tr><td>Synesthesia</td><td>"loud shirt"</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="card">
+        <h3>Rhetoric & imagery</h3>
+        <table><thead><tr><th>Device</th><th>Def</th></tr></thead><tbody>
+        <tr><td>Anaphora</td><td>repeat at line <b>starts</b> (hook!)</td></tr>
+        <tr><td>Epistrophe</td><td>repeat at line <b>ends</b></td></tr>
+        <tr><td>Chiasmus</td><td>mirrored ABBA ideas</td></tr>
+        <tr><td>Antithesis</td><td>opposites, parallel grammar</td></tr>
+        <tr><td>Asyndeton</td><td>"I came, I saw, I conquered"</td></tr>
+        <tr><td>Volta / turn</td><td>the pivot — your bridge</td></tr>
+        </tbody></table>
+        <h4>Imagery — the 7 senses</h4>
+        <p class="note" style="margin-top:0">visual · auditory · olfactory · gustatory · tactile · <b>kinesthetic</b> (motion) · <b>organic</b> (gut). <b>Show, don't tell</b> — "cold coffee," not "sad."</p>
+        <p class="note"><b>Strategy:</b> concretion (abstract→image) · the turn · economy · best line <b>last</b> · meaning sparks in the gap between images.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= PART III ======================= -->
+  <div class="part-band"><span>Part III · The Bridge</span></div>
+
+  <!-- BRIDGE -->
+  <section id="bridge" class="s-bridge">
+    <div class="sec-head"><span class="ico">🎤</span><h2>Lyric, Flow &amp; the Music↔Poetry Bridge</h2><span class="kicker">where it becomes a song — and a prompt</span></div>
+    <div class="grid g3">
+
+      <div class="card">
+        <h3>Prosody — fit word to music</h3>
+        <ul class="defs">
+          <li><span class="term">Stress → strong beat</span> never mis-stress ("gui-TAR," not "GUI-tar")</li>
+          <li><span class="term">Open vowels on money notes</span> "ah/oh" for peaks; "ee/ih" feel tight</li>
+          <li><span class="term">Line = one breath</span> can't sing it in a breath? cut it</li>
+          <li><span class="term">Rhyme on the downbeat</span> for power</li>
+          <li><span class="term">Repetition is a feature</span> the chorus loop is the point</li>
+        </ul>
+        <p class="note"><b>Test:</b> speak at tempo, then hum on one note — jaw locks = bad vowel, out of air = too long.</p>
+      </div>
+
+      <div class="card">
+        <h3>Sections & hook</h3>
+        <p class="note" style="margin-top:0"><b>Verse</b>=particular (a name, a Tuesday). <b>Chorus</b>=universal, simplest, holds the <b>title</b>. <b>Bridge</b>=the turn. If one line survives, it's the chorus.</p>
+        <ul class="defs">
+          <li><span class="term">Hook types</span> melodic (hum) · lyrical (title) · rhythmic (cadence)</li>
+          <li><span class="term">Title placement</span> first &amp; last line of chorus</li>
+          <li><span class="term">Repeat 3–5×</span> per song — imprint, not annoy</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Flow & rap craft</h3>
+        <ul class="defs">
+          <li><span class="term">The bar</span> 1 measure · "a 16" = 16-bar verse</li>
+          <li><span class="term">Flow / pocket</span> delivery rhythm locked to drums</li>
+          <li><span class="term">Triplet flow</span> 3/beat gallop · <span class="term">double-time</span> 2× density</li>
+          <li><span class="term">Multisyllabic</span> "area / scarier / barrier"</li>
+          <li><span class="term">Internal + slant</span> modern default; assonance chains</li>
+          <li><span class="term">Spill-over</span> enjamb past the bar = momentum</li>
+          <li><span class="term">Entendre</span> two meanings; reward the re-listen</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🌉 Foot ↔ musical feel</h3>
+        <table><thead><tr><th>Foot</th><th>Musical home</th></tr></thead><tbody>
+        <tr><td>Iamb da-DUM</td><td>pickup→beat 1, 4/4 verse</td></tr>
+        <tr><td>Trochee DUM-da</td><td>on-beat hooks/chants</td></tr>
+        <tr><td>Anapest da-da-DUM</td><td>6/8 &amp; 12/8 gallop</td></tr>
+        <tr><td>Dactyl DUM-da-da</td><td>3/4 waltz, triplet flow</td></tr>
+        <tr><td>Spondee DUM-DUM</td><td>stabs, half-time hits</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="card">
+        <h3>🌉 Mode ↔ lyric tone</h3>
+        <table><thead><tr><th>Mode</th><th>Lyric tone</th></tr></thead><tbody>
+        <tr><td>Major</td><td>joy, affirmation, anthems</td></tr>
+        <tr><td>Aeolian min</td><td>grief, longing, heartbreak</td></tr>
+        <tr><td>Dorian</td><td>hopeful-melancholy, resilient</td></tr>
+        <tr><td>Phrygian</td><td>menace, dread</td></tr>
+        <tr><td>Mixolydian</td><td>swagger, bluesy confidence</td></tr>
+        <tr><td>Lydian</td><td>wonder, awe, dreaming</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="card">
+        <h3>🌉 BPM ↔ word density</h3>
+        <table><thead><tr><th>Tempo</th><th>Lyric strategy</th></tr></thead><tbody>
+        <tr><td>60–80 ballad</td><td>long phrases, melisma, space</td></tr>
+        <tr><td>90–115 groove</td><td>conversational, story room</td></tr>
+        <tr><td>116–132 pop</td><td>tight, punchy, strong hook</td></tr>
+        <tr><td>133–160+ fast</td><td>clipped &amp; dense (rap) OR sparse chant (EDM)</td></tr>
+        </tbody></table>
+        <p class="note">Slow buys syllable <b>length</b>; fast buys syllable <b>count</b> (or sparsity).</p>
+      </div>
+
+      <div class="card full">
+        <h3>🤖 Prompt anatomy & meta-tags</h3>
+        <p class="note" style="margin-top:0"><b>Style skeleton:</b> <span class="mono">[genre] + [mood] + [key/mode] + [BPM + feel] + [instruments w/ timbre] + [production] + [vocal + delivery] + [era]</span></p>
+        <p class="note">⚠️ <b>Suno reality-check:</b> exact <b>key</b> &amp; <b>time-signature</b> don't actually lock in Suno (placebo) — <b>mode, BPM &amp; feel</b> are what bias the sound. Full detail in <a href="Bardcore Engineering.html" style="color:var(--accent)">Bardcore Engineering</a>.</p>
+        <p class="note">Structure tags (own line): <span class="tag">[Intro]</span> <span class="tag">[Verse]</span> <span class="tag">[Pre-Chorus]</span> <span class="tag">[Chorus]</span> <span class="tag">[Post-Chorus]</span> <span class="tag">[Hook]</span> <span class="tag">[Bridge]</span> <span class="tag">[Build]</span> <span class="tag">[Drop]</span> <span class="tag">[Break]</span> <span class="tag">[Instrumental]</span> <span class="tag">[Guitar Solo]</span> <span class="tag">[Outro]</span> · inline: <span class="tag">(whispered)</span> <span class="tag">(belted)</span> <span class="tag">(ad-lib: yeah)</span></p>
+        <h4>Anti-"AI-ism"</h4>
+        <p class="note" style="margin-top:0">Break default AABB+4/4. Vary rhyme scheme &amp; line length · specify <b>mode + instrumentation</b> · request delivery ("behind-the-beat," "half-time bridge") · give the exact hook &amp; where it repeats · kill your own clichés · <b>mode + BPM beat ten adjectives</b> · re-roll without mercy.</p>
+        <div class="grid g2" style="margin-top:8px">
+          <div>
+            <h4>Worked example — neo-soul ballad</h4>
+            <p class="mono" style="font-size:10.5px">neo-soul ballad, aching, D Dorian, 72 BPM behind-the-beat, warm Rhodes + muted upright bass + brushed drums, vinyl warmth, breathy female alto, lush harmonies, 70s lo-fi</p>
+<pre class="lyric">[Verse]
+Cold coffee on the windowsill, the radio's still on
+[Chorus]
+But you don't call, you don't call
+I'm learning how the quiet sounds</pre>
+            <span class="why">concrete image, open-vowel "call/all," Dorian sadness, ad-lib echoes.</span>
+          </div>
+          <div>
+            <h4>Worked example — epic build</h4>
+            <p class="mono" style="font-size:10.5px">epic cinematic trailer, ominous→triumphant, C Lydian over D-min pedal, 60→120 accel, low brass + taiko + choir + soaring strings, huge hall, belted female lead</p>
+<pre class="lyric">[Build]
+A spark beneath the ash
+[Drop][Chorus]
+RISE — and the dark comes undone
+RISE — we are the breaking sun</pre>
+            <span class="why">Lydian wonder, spondee "RISE" on stabs, open belt vowels, accel = build.</span>
+          </div>
+          <div>
+            <h4>Worked example — boom-bap rap</h4>
+            <p class="mono" style="font-size:10.5px">90s boom-bap, dusty &amp; confident, E minor, 88 BPM in the pocket, chopped soul sample, upright-bass loop, vinyl drums, raspy baritone, conversational behind-the-beat flow</p>
+<pre class="lyric">[Verse]
+Pen hit the pad like a hammer to anvil (anvil)
+Every bar's a chapter, a mantra, a handle (yeah)
+[Hook]
+That's the pocket, that's the pocket where I live</pre>
+            <span class="why">multisyllabic chains (anvil/mantra/handle), enjambment, ad-libs double the rhyme.</span>
+          </div>
+          <div>
+            <h4>Worked example — bardcore folk</h4>
+            <p class="mono" style="font-size:10.5px">bardcore medieval folk, wistful, A Aeolian→Dorian, 96 BPM 6/8 lilt, lute + hurdy-gurdy + wooden flute + frame drum, stone-hall reverb, mixed-gender harmonies, no modern instruments</p>
+<pre class="lyric">[Verse]
+By candle-low the rivers run, the watchman calls the hour
+[Chorus]
+Oh carry me, oh carry me, where the green roads bend</pre>
+            <span class="why">6/8 anapestic gallop, open "oh/me" sustained vowels, refrain chorus, modal color.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card full">
+        <h3>📜 The 10 Commandments of Lyric Craft</h3>
+        <div class="cmd">
+          <div><b>Serve the breath</b> — can't sing it in one breath at tempo? cut it.</div>
+          <div><b>Stress lands on the strong beat</b> — never mis-stress a word to fit.</div>
+          <div><b>Open vowels on the money notes</b> — save "ah/oh" for the peaks.</div>
+          <div><b>The chorus is simplest, widest, most-repeated</b> — and holds the title.</div>
+          <div><b>Universal through the specific</b> — name the diner, not "the pain."</div>
+          <div><b>Earn repetition</b> — every loop chosen, no filler.</div>
+          <div><b>Rhyme is a tool, not a tyrant</b> — break AABB; use slant, internal, multi.</div>
+          <div><b>Show senses, don't state feelings</b> — cold coffee over "I'm sad."</div>
+          <div><b>Match mode &amp; tempo to the emotion</b> — Dorian + 72 BPM &gt; ten adjectives.</div>
+          <div><b>Rewrite</b> — first drafts are clay; the song is in the second pass.</div>
+        </div>
+        <p class="note" style="margin-top:8px">🤖 <b>Prompt corollary:</b> tell the AI the mode, the BPM+feel, the timbre, the delivery, and the exact hook — then re-roll without mercy.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= APPENDICES ======================= -->
+  <div class="part-band"><span>Appendices · Quick Reference</span></div>
+
+  <!-- FAST-START RECIPES -->
+  <section id="recipes" class="s-bridge">
+    <div class="sec-head"><span class="ico">⚡</span><h2>Fast-Start Recipes</h2><span class="kicker">copy the style line, build the lyric to the note</span></div>
+    <div class="grid g3">
+      <div class="card recipe"><h3>🥀 The Tearjerker</h3>
+        <span class="mono">acoustic pop ballad, devastating and tender, A minor, 68 BPM rubato, fingerpicked guitar + swelling strings + soft piano, intimate close-mic male vocal</span>
+        <p class="note">Sparse verse → string-swell pre-chorus → full chorus → stripped final. One concrete object holds the grief.</p></div>
+      <div class="card recipe"><h3>🏟️ The Stadium Anthem</h3>
+        <span class="mono">anthemic arena rock, triumphant, D major, 124 BPM driving, big distorted guitars + live drums + gang-vocal chorus + Hammond organ, soaring belted vocal</span>
+        <p class="note">Prog I–V–vi–IV. Title = first <i>and</i> last line of the chorus, open vowels.</p></div>
+      <div class="card recipe"><h3>🗡️ The Villain's Theme</h3>
+        <span class="mono">dark cinematic hybrid orchestral, menacing, E Phrygian, 100 BPM, low brass + distorted cello ostinato + taiko + ominous choir, half-time drops</span>
+        <p class="note">Andalusian descent, spondaic vocal stabs, plosive-heavy text.</p></div>
+      <div class="card recipe"><h3>🌃 The Late-Night Drive</h3>
+        <span class="mono">synthwave, nostalgic and cool, F♯ minor, 110 BPM steady, analog supersaw pads + gated-reverb snare + FM bass + arps, neon retro 80s, breathy androgynous vocal</span>
+        <p class="note">Static/wave melodic contour, slant rhyme, 2nd-person address.</p></div>
+      <div class="card recipe"><h3>⚔️ The Hero's Rise</h3>
+        <span class="mono">epic trailer music, ominous→triumphant, C Lydian over D-minor pedal, 60→128 accelerating, taiko + soaring strings + wordless choir → belted lead</span>
+        <p class="note">♭VI–♭VII–i payoff, "RISE" spondee on the downbeat, half-time bridge.</p></div>
+      <div class="card recipe"><h3>🚬 The Smoke-Filled Groove</h3>
+        <span class="mono">slow funk / neo-soul, sultry and confident, E Mixolydian, 96 BPM deep pocket, slap bass + wah clav + muted trumpet + brushed drums, raspy soulful vocal with runs</span>
+        <p class="note">12-bar-ish vamp, behind-the-beat, internal rhyme + swagger.</p></div>
+    </div>
+  </section>
+
+  <!-- EMOTIONAL CONSOLE -->
+  <section id="console" class="s-console">
+    <div class="sec-head"><span class="ico">🎛️</span><h2>The Emotional Console</h2><span class="kicker">dial a feeling → read across</span></div>
+    <div class="card full">
+      <table><thead><tr><th>Want…</th><th>Mode / Key</th><th>Tempo &amp; feel</th><th>Progression</th><th>Meter / foot</th><th>Genre lean</th><th>Lyric tone + device</th></tr></thead><tbody>
+      <tr><td><b>Joy / Anthem</b></td><td>Ionian major (C D G)</td><td>116–130 driving</td><td>I–V–vi–IV</td><td>iamb/trochee 4/4</td><td>pop, arena rock</td><td>affirmation; anaphora, open vowels</td></tr>
+      <tr><td><b>Heartbreak</b></td><td>Aeolian minor</td><td>60–80 spacious</td><td>vi–IV–I–V</td><td>iamb, 4/4 or 6/8</td><td>ballad, indie, soul</td><td>concrete loss; slant rhyme, liquids</td></tr>
+      <tr><td><b>Wistful / Nostalgic</b></td><td>Major +iv, or Dorian</td><td>70–95 gentle</td><td>I–vi–IV–V / IV–V–iii–vi</td><td>dactyl lilt, 6/8</td><td>lo-fi, city pop, folk</td><td>sensory memory; 2nd-person</td></tr>
+      <tr><td><b>Menace / Dread</b></td><td>Phrygian / harm. minor</td><td>90–140</td><td>i–♭VII–♭VI–V</td><td>spondee/trochee</td><td>metal, dark trap</td><td>threat imagery; plosives, cacophony</td></tr>
+      <tr><td><b>Triumph / Epic</b></td><td>Lydian over min pedal</td><td>120+ accelerating</td><td>♭VI–♭VII–i</td><td>spondaic, mixed meter</td><td>cinematic, power metal</td><td>apostrophe, "RISE"; belt vowels</td></tr>
+      <tr><td><b>Dreamy / Wonder</b></td><td>Lydian / whole-tone</td><td>80–110 floating</td><td>Imaj7–II / pedal</td><td>anapest/amphibrach</td><td>dream pop, ambient</td><td>synesthesia; soft sibilance</td></tr>
+      <tr><td><b>Gritty / Swagger</b></td><td>Mixolydian / blues</td><td>90–115 in pocket</td><td>I–♭VII–IV / 12-bar</td><td>trochee, shuffle 12/8</td><td>funk, blues, S. rock</td><td>braggadocio; internal rhyme</td></tr>
+      <tr><td><b>Eerie / Unstable</b></td><td>Locrian / diminished</td><td>varies, unsteady</td><td>chromatic / tritone</td><td>irregular 5/4 7/8</td><td>horror, avant, glitch</td><td>paradox; dissonant images</td></tr>
+      <tr><td><b>Tender / Intimate</b></td><td>Major/Dorian, maj7</td><td>60–75 rubato</td><td>I–iii–IV / sus-rich</td><td>iamb, 4/4</td><td>singer-songwriter</td><td>organic detail; breath, whisper</td></tr>
+      <tr><td><b>Hype / Aggressive</b></td><td>minor, hard</td><td>140–160 / trap ½</td><td>i–VI–VII loop</td><td>double-time/triplet</td><td>trap, DnB, punk</td><td>chant; plosives, dense internal rhyme</td></tr>
+      </tbody></table>
+      <p class="note">Columns are independent dials — borrow Dorian from one row, 6/8 from another, the genre from a third. A palette, not a cage.</p>
+    </div>
+  </section>
+
+  <!-- CHEAT CARD -->
+  <section id="cheatcard" class="s-card">
+    <div class="sec-head"><span class="ico">🃏</span><h2>The One-Screen Cheat Card</h2><span class="kicker">the 20% you use 80% of the time</span></div>
+    <div class="grid g3">
+      <div class="card"><h3>Harmony</h3><p class="note" style="margin-top:0">Major=bright, minor=dark. Brightness <b>Lyd·Ion·Mixo·Dor·Aeo·Phryg·Locr</b>. Function <b>T→PD→D→T</b> (I→IV/ii→V→I). The 4 chords <b>I–V–vi–IV</b>; sad <b>vi–IV–I–V</b>. V→I=stop, IV→I=amen, →V=question, V→vi=fake-out. Borrow <b>iv</b>=saddest chord; <b>Picardy 3rd</b>=hope.</p></div>
+      <div class="card"><h3>Rhythm</h3><p class="note" style="margin-top:0">Backbeat=snare on <b>2 &amp; 4</b>. 4/4=default, 6/8=rolling, 3/4=waltz. Swing=long-short. BPM 60–80 slow · 90–115 groove · 120–130 dance · 140+ energy. <b>Each chorus bigger; subtract before the hit.</b></p></div>
+      <div class="card"><h3>Song form</h3><p class="note" style="margin-top:0"><span class="mono">Intro→V→PreC→Chorus→V→PreC→Chorus→Bridge→Final Chorus→Outro</span>. Verse=specific, Chorus=universal+title+simplest, Bridge=the turn.</p></div>
+      <div class="card"><h3>Meter</h3><p class="note" style="margin-top:0">iamb da-DUM (talk) · trochee DUM-da (hook) · anapest da-da-DUM (gallop) · dactyl DUM-da-da (waltz) · spondee DUM-DUM (stabs). <b>Ballad meter 8.6.8.6 ABCB</b> = half of all songs.</p></div>
+      <div class="card"><h3>Rhyme & lyric</h3><p class="note" style="margin-top:0">Don't rhyme all AABB — use <b>slant, internal, multisyllabic, assonance</b>. Stressed syllable on the strong beat, <b>always</b>. <b>Show senses, not feelings.</b> Universal through the specific. Open vowels on big notes. Best line <b>last</b>.</p></div>
+      <div class="card"><h3>Prompt skeleton</h3><p class="note" style="margin-top:0"><span class="mono">[genre]+[mood]+[key/mode]+[BPM+feel]+[instruments w/ timbre]+[production]+[vocal+delivery]+[era]</span>. <b>Mode + BPM beat ten adjectives.</b> Re-roll without mercy.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    🎼 <b>The Bard's Codex</b> — Music &amp; Poetry Craft Cheat Sheet · part of <b>The Bardcore Forge</b><br>
+    <span style="opacity:.9">↩ <a href="The Bardcore Forge (Start Here).html" style="color:#a78bfa">Start Here</a> · 🔥 <a href="From Cold to Flame.html" style="color:#a78bfa">From Cold to Flame</a> (beginner course) · ⚒️ <a href="Bardcore Engineering.html" style="color:#a78bfa">Bardcore Engineering</a> (Suno guide)</span><br>
+    <span style="color:#9298ac; font-size:11px">Tip: to export — open in a browser, then use a full-page screenshot (DevTools ▸ "Capture full size screenshot", or a full-page-capture extension), or “Save / Print” ▸ Save as PDF.</span>
+  </footer>
+
+</div>
+</body>
+</html>

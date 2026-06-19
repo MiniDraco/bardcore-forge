@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Cold to Flame — Turn What You Feel Into Songs</title>
+<style>
+  :root{
+    --bg:#140f0b; --card:#1d1712; --card2:#271e16; --ink:#f4ede1; --sub:#b6a892;
+    --line:#3a2f24; --ember:#f97316; --flame:#fbbf24; --teal:#5ec5b6; --cool:#7c91b8;
+    --accent:var(--ember);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; color:var(--ink);
+    background:
+      radial-gradient(1100px 520px at 50% -8%, #3a1505 0%, transparent 60%),
+      radial-gradient(800px 500px at 100% 10%, #2a1a06 0%, transparent 55%),
+      var(--bg);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px; line-height:1.62; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:30px 20px 70px;}
+
+  header.hero{text-align:center; padding:44px 22px 34px; border:1px solid var(--line);
+    border-radius:24px; position:relative; overflow:hidden;
+    background:linear-gradient(170deg,#2a160a 0%, #1a120c 55%, #120d09 100%);}
+  header.hero::after{content:""; position:absolute; inset:0;
+    background:radial-gradient(600px 220px at 50% 0, rgba(249,115,22,.22), transparent 70%);}
+  .hero .flameico{font-size:40px; filter:drop-shadow(0 0 14px rgba(249,115,22,.6));}
+  .hero h1{font-size:52px; margin:6px 0 0; font-weight:800; letter-spacing:.5px;
+    background:linear-gradient(90deg,#fde68a,#f97316,#ef4444);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;}
+  .hero .sub{color:#e8cba0; font-size:18px; margin-top:10px; font-weight:600;}
+  .hero .manifesto{color:var(--sub); font-size:15px; margin:14px auto 0; max-width:560px;}
+
+  .path{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:22px 0 6px;}
+  .path a{font-size:12.5px; padding:7px 13px; border-radius:999px; border:1px solid var(--line);
+    background:var(--card); color:var(--sub); text-decoration:none; transition:.15s;}
+  .path a:hover{color:#fff; border-color:var(--ember); transform:translateY(-1px);}
+
+  .part{margin:50px 0 10px; text-align:center;}
+  .part .label{display:inline-block; padding:8px 22px; border:1px solid var(--line); border-radius:999px;
+    background:var(--card); color:var(--flame); font-size:13px; letter-spacing:4px; text-transform:uppercase; font-weight:700;}
+
+  .lesson{background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:26px 26px 22px; margin:20px 0; box-shadow:0 18px 40px -28px rgba(0,0,0,.9);
+    scroll-margin-top:14px;}
+  .lesson > .num{display:inline-flex; align-items:center; gap:11px; margin-bottom:6px;}
+  .lesson .badge{width:38px; height:38px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:17px; color:#160d05;
+    background:linear-gradient(150deg,var(--flame),var(--ember)); box-shadow:0 0 16px rgba(249,115,22,.4);}
+  .lesson h2{margin:0; font-size:25px; font-weight:800; line-height:1.2;}
+  .lesson .tag-line{color:var(--ember); font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; margin:2px 0 12px;}
+  .lesson p{margin:11px 0;}
+  .lesson b, .lesson strong{color:#fff;}
+  .big{font-size:18px;}
+
+  .takeaway{margin:16px 0 2px; padding:13px 16px; border-left:4px solid var(--flame);
+    background:rgba(251,191,36,.08); border-radius:0 10px 10px 0; font-size:15px;}
+  .takeaway b{color:var(--flame);}
+
+  .tryit{margin:16px 0 4px; padding:15px 17px; border:1px dashed var(--teal); border-radius:12px;
+    background:rgba(94,197,182,.07);}
+  .tryit h4{margin:0 0 6px; color:var(--teal); font-size:14px; letter-spacing:.5px;}
+  .tryit p{margin:6px 0; font-size:14.5px;}
+
+  .ba{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:16px 0;}
+  .ba .col{border-radius:12px; padding:13px 15px; font-size:14.5px;}
+  .ba .cold{background:rgba(124,145,184,.08); border:1px solid #33405a;}
+  .ba .flame{background:rgba(249,115,22,.09); border:1px solid #5a3a1f;}
+  .ba .h{font-size:12px; text-transform:uppercase; letter-spacing:1.5px; font-weight:700; margin-bottom:7px;}
+  .ba .cold .h{color:var(--cool);} .ba .flame .h{color:var(--ember);}
+  .ba i{color:var(--ink); font-style:normal; opacity:.96;}
+  .ba .why{display:block; margin-top:8px; font-size:12.5px; color:var(--sub); font-style:italic;}
+  @media(max-width:620px){ .ba{grid-template-columns:1fr;} }
+
+  .map{display:flex; align-items:flex-end; gap:5px; height:130px; margin:14px 0 6px; padding:0 2px;}
+  .map .blk{flex:1; border-radius:7px 7px 0 0; display:flex; flex-direction:column; justify-content:flex-end;
+    align-items:center; padding-bottom:5px; font-size:10px; font-weight:700; color:#160d05; text-align:center; line-height:1.1;}
+  .map .lab{position:relative; top:16px; color:var(--sub); font-weight:600; font-size:9.5px;}
+
+  pre.song{background:#120d08; border:1px solid var(--line); border-radius:12px; padding:15px 17px;
+    font-family:"Consolas","SF Mono",ui-monospace,monospace; font-size:13.5px; line-height:1.6;
+    color:#e8ddc9; white-space:pre-wrap; margin:13px 0; overflow-x:auto;}
+  pre.song .t{color:var(--ember); font-weight:700;}
+  code,.mono{font-family:"Consolas",monospace; font-size:13.5px; background:rgba(249,115,22,.12);
+    color:#ffd9a8; padding:1px 6px; border-radius:6px;}
+  .tag{font-family:"Consolas",monospace; font-size:12.5px; background:var(--card2); border:1px solid var(--line);
+    color:#ffd9a8; padding:2px 8px; border-radius:6px; white-space:nowrap; display:inline-block; margin:2px 1px;}
+
+  ul.clean{margin:10px 0; padding-left:0; list-style:none;}
+  ul.clean li{padding:5px 0 5px 26px; position:relative;}
+  ul.clean li::before{content:"🔥"; position:absolute; left:0; font-size:13px;}
+
+  /* ember card */
+  #embercard .lesson{background:linear-gradient(165deg,#241a11,#1a130d); border-color:#5a3a1f;}
+  .ember-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:6px;}
+  @media(max-width:620px){ .ember-grid{grid-template-columns:1fr;} }
+  .ember-grid .box{background:rgba(0,0,0,.25); border:1px solid var(--line); border-radius:12px; padding:13px 15px;}
+  .ember-grid .box h4{margin:0 0 7px; color:var(--flame); font-size:14px;}
+  .ember-grid .box p{margin:0; font-size:13.5px; color:var(--sub);}
+  .ember-grid .box b{color:var(--ink);}
+
+  footer{margin-top:46px; text-align:center; color:var(--sub); font-size:14px;
+    border-top:1px solid var(--line); padding-top:26px;}
+  footer .big{color:var(--flame); font-size:18px; font-weight:700; display:block; margin-bottom:8px;}
+
+  .topbtn{position:fixed; left:16px; bottom:16px; z-index:99; width:44px; height:44px; border-radius:50%;
+    background:var(--card2); color:var(--ink); border:1px solid var(--line); font-size:19px; cursor:pointer;}
+  .topbtn:hover{border-color:var(--ember); color:#fff;}
+  .printbtn{position:fixed; right:16px; bottom:16px; z-index:99; background:var(--ember); color:#160d05;
+    border:none; border-radius:999px; padding:12px 19px; font-size:14px; font-weight:800; cursor:pointer;
+    box-shadow:0 8px 24px -8px rgba(249,115,22,.8);}
+  @media print{ .printbtn,.topbtn,.path{display:none;} }
+</style>
+</head>
+<body>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" title="Back to top">↑</button>
+<button class="printbtn" onclick="window.print()">🖨 Save / Print</button>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="flameico">🔥</div>
+    <h1>From Cold to Flame</h1>
+    <div class="sub">Turn what you feel into songs you're proud of.</div>
+    <p class="manifesto">A start-from-nothing guide to writing real songs — no music knowledge needed.
+    You bring the fire. The tools are right here. By the last page you'll forge a finished track.</p>
+  </header>
+
+  <div class="path">
+    <a href="#start">Start here</a>
+    <a href="#shape">① The Shape of a Song</a>
+    <a href="#words">② Words That Catch Fire</a>
+    <a href="#suno">③ Lighting It Up (Suno)</a>
+    <a href="#forge">🔨 The Forge (full build)</a>
+    <a href="#yourturn">✍️ Your Turn</a>
+    <a href="#embercard">🃏 The Ember Card</a>
+  </div>
+
+  <!-- START HERE -->
+  <section id="start">
+    <div class="lesson">
+      <div class="num"><div class="badge" style="background:linear-gradient(150deg,#fde68a,#ef4444)">✦</div></div>
+      <h2>Read this first</h2>
+      <div class="tag-line">the only thing that can't be taught, you already have</div>
+      <p class="big">A song is just a feeling that found a shape.</p>
+      <p>Here's the truth most "how to write music" guides never tell you: <b>the hard part isn't the craft — it's having something real to say.</b> And you've got that. Everyone does. Most people were just never handed the tools to shape it, so the fire stays inside where nobody can feel its heat.</p>
+      <p>That's all this guide is — <b>the tools</b>. Not talent. Not theory. Not a gift you're born with. Tools you can pick up one at a time, the same way anyone learns to cook or drive or throw a punch. You will not need to read music. You will not learn a single chord. <b>The AI makes the music for you.</b> Your job — the human job, the part no machine can do — is the <b>words</b> and the <b>shape</b>.</p>
+      <p>We're going to take you from <span style="color:var(--cool)">cold</span> — a feeling stuck in your chest with nowhere to go — to <span style="color:var(--ember)"><b>flame</b></span>: a real song, with verses and a chorus, that makes someone else feel exactly what you felt. We'll do it in three moves:</p>
+      <ul class="clean">
+        <li><b>① The Shape</b> — how a song is built. The skeleton. This is the part most people get stuck on, and it's the easiest to learn.</li>
+        <li><b>② The Words</b> — how to write lines that hit instead of slide off.</li>
+        <li><b>③ The Spark</b> — how to hand it to Suno and get back something that sounds like a record.</li>
+      </ul>
+      <div class="takeaway"><b>The one belief to carry:</b> you are not learning to <i>become</i> an artist. You already are one. You're just learning where the tools are kept.</div>
+    </div>
+  </section>
+
+  <!-- FINDING THE FIRE -->
+  <div class="lesson" id="l0">
+    <div class="num"><div class="badge" style="background:linear-gradient(150deg,#fde68a,#f97316)">✦</div><h2>First — get it out of your chest</h2></div>
+    <div class="tag-line">you can't shape what isn't on the page yet</div>
+    <p>Before any of the craft, there's one move that stops more people than every other step combined: <b>actually getting words down.</b> The blank page is where dreams sit and wait. So this lesson is about beating it — and it comes with the most freeing rule in all of writing:</p>
+    <p class="big" style="text-align:center;color:var(--flame)">You can't edit a blank page. So write a bad one.</p>
+    <p>Every song you've ever loved started as an ugly, half-broken first draft that <b>nobody ever heard.</b> The first version is <i>supposed</i> to be bad. At the start, your only job is to get <i>something</i> down — you'll make it good later, with the tools in this guide. There are no wrong words yet.</p>
+    <p><b>Where do songs come from?</b> Not from waiting for lightning. From your own ordinary life — the realest material there is. Mine it:</p>
+    <ul class="clean">
+      <li><b>A person</b> — someone you miss, owe, can't forgive, can't forget.</li>
+      <li><b>A moment</b> — the morning everything changed, the last time, the first time.</li>
+      <li><b>An object</b> — a phone that won't ring, a key you still carry, an empty chair.</li>
+      <li><b>A line someone said</b> — words that stuck in you for years. Start right there.</li>
+    </ul>
+    <p><b>The two-minute fire-starter:</b> pick one thing — a window, a road, a jacket. Set a timer for two minutes. Write everything your senses give you about it — what it looks like, sounds like, smells like, what it reminds you of — and <b>do not stop, and do not judge a single word.</b> When the timer ends you'll have a mess. Inside that mess are two or three lines worth keeping. That's how songs are mined: write a lot of dirt to find a little gold.</p>
+    <div class="takeaway"><b>Takeaway:</b> Beat the blank page by giving yourself permission to write <b>badly</b> first. Mine your real life, dump it raw — then the rest of this guide turns the mess into a song.</div>
+    <div class="tryit"><h4>🔥 Your turn</h4>
+      <p>Set a timer for two minutes. Pick one thing that's been on your mind — a person, a place, an object. Write about it without stopping until the timer ends. Fix nothing. When you're done, <b>circle the one line that feels most true.</b> That's your starting point — your whole song can grow from it.</p>
+    </div>
+  </div>
+
+  <!-- PART 1 -->
+  <div class="part" id="shape"><span class="label">Part ① · The Shape of a Song</span></div>
+
+  <div class="lesson" id="l1">
+    <div class="num"><div class="badge">1</div><h2>A song is built from blocks</h2></div>
+    <div class="tag-line">the skeleton — learn this and you're 80% there</div>
+    <p>Every song you've ever loved is made of a few repeating <b>blocks</b>. Once you can name them, you'll never feel lost in the middle of writing again. There are really only four that matter:</p>
+    <ul class="clean">
+      <li><b>Verse</b> — where you <b>tell the story</b>. The details, the scene, what happened. The words change every time it comes back.</li>
+      <li><b>Chorus</b> — the <b>heart</b>. The main feeling, the part everyone sings, the line you'd put on a poster. It stays the <i>same</i> every time — that's the point.</li>
+      <li><b>Pre-Chorus</b> — the <b>ramp</b>. A short lift that carries you up from the verse into the chorus so the chorus hits harder. (More on this in Lesson 4 — it's the secret weapon.)</li>
+      <li><b>Bridge</b> — the <b>turn</b>. One section, near the end, that says something new or flips the meaning. Breaks the pattern right before the last chorus.</li>
+    </ul>
+    <p>Stack them and you get a song. A song also <b>breathes</b> — it gets quieter and smaller, then louder and bigger. Here's the shape of a normal song, with height showing energy:</p>
+    <div class="map">
+      <div class="blk" style="height:26%; background:#6b5640"><span class="lab">Intro</span></div>
+      <div class="blk" style="height:40%; background:#8a6a3c"><span class="lab">Verse 1</span></div>
+      <div class="blk" style="height:62%; background:#b9762e">Pre<span class="lab">Pre-Ch</span></div>
+      <div class="blk" style="height:90%; background:var(--ember)">CHORUS<span class="lab">Chorus</span></div>
+      <div class="blk" style="height:40%; background:#8a6a3c"><span class="lab">Verse 2</span></div>
+      <div class="blk" style="height:62%; background:#b9762e">Pre<span class="lab">Pre-Ch</span></div>
+      <div class="blk" style="height:90%; background:var(--ember)">CHORUS<span class="lab">Chorus</span></div>
+      <div class="blk" style="height:54%; background:#9a6bb0">Bridge<span class="lab">Bridge</span></div>
+      <div class="blk" style="height:100%; background:var(--flame)">BIG<span class="lab">Last Chorus</span></div>
+      <div class="blk" style="height:28%; background:#6b5640"><span class="lab">Outro</span></div>
+    </div>
+    <p>That's it. That's the map. Notice the last chorus is the <b>biggest</b> — you save your most for last. Notice the bridge <b>drops down</b> before the final lift — pulling back makes the last hit feel huge.</p>
+    <div class="takeaway"><b>Takeaway:</b> Verse = the story · Chorus = the feeling everyone shares · Pre-chorus = the ramp · Bridge = the twist. A song is just those blocks, breathing.</div>
+    <div class="tryit"><h4>🔥 Your turn</h4>
+      <p>Put on a song you love. Don't listen to the words — listen for the <b>shape</b>. Can you feel where the verse ends and the chorus lifts in? Can you hear the part that's <i>different</i> near the end (the bridge)? That's all you're learning to do: feel the blocks.</p>
+    </div>
+  </div>
+
+  <div class="lesson" id="l2">
+    <div class="num"><div class="badge">2</div><h2>The Chorus — the fire everyone gathers around</h2></div>
+    <div class="tag-line">if you only nail one thing, nail this</div>
+    <p>The chorus is the part people remember. It's the same words every time, it carries the <b>main feeling</b>, and it usually contains the <b>title</b> of the song. If a stranger could only keep one line of your song, it should be the chorus.</p>
+    <p>Beginners get stuck here because they try to make the chorus <i>say everything</i>. Do the opposite. <b>The chorus is the simplest part.</b> The verses do the explaining; the chorus just lands the feeling — wide and clear, so anyone can stand inside it.</p>
+    <p>How to build one, in three steps:</p>
+    <ul class="clean">
+      <li><b>Find your one true line</b> — the thing you most need to say, stripped to its bones. That's your title and your hook.</li>
+      <li><b>Make it universal</b> — a verse is <i>your</i> exact night; a chorus is the part <i>everyone</i> has felt. Don't name names in the chorus.</li>
+      <li><b>Repeat it</b> — say the main line two or more times. Repetition isn't lazy in a song; it's the whole point. It's how it gets stuck in someone's head.</li>
+    </ul>
+    <div class="ba">
+      <div class="col cold"><div class="h">✗ Cold</div><i>"I feel so sad and lonely here tonight / I really hope that someday I'll be alright"</i>
+      <span class="why">Tells us the feeling instead of making us feel it. Vague. We've heard it a thousand times.</span></div>
+      <div class="col flame"><div class="h">✓ Flame</div><i>"So I leave the porch light on / leave the porch light on / even though I know by now that you're gone"</i>
+      <span class="why">One concrete image (the porch light) carries all the loneliness. Repeats. Anyone who's waited for someone gets it instantly.</span></div>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> The chorus is the <b>simplest, widest, most-repeated</b> part — and it holds your title. Say less; mean more.</div>
+    <div class="tryit"><h4>🔥 Your turn</h4>
+      <p>Think of something you're carrying right now. Write the <b>one line</b> that gets closest to it — just one. Don't explain it. Now say that line out loud twice. That's the seed of a chorus.</p>
+    </div>
+  </div>
+
+  <div class="lesson" id="l3">
+    <div class="num"><div class="badge">3</div><h2>The Verse — where your story lives</h2></div>
+    <div class="tag-line">the details that earn the chorus</div>
+    <p>If the chorus is the feeling, the <b>verse</b> is the <b>evidence</b>. It's where you put the specifics: the room, the time of day, the thing that was said, what you did with your hands. The verse is allowed to be small and exact, because it's <i>your</i> story — and that's what makes the chorus feel <i>earned</i> when it arrives.</p>
+    <p>Two rules carry every verse:</p>
+    <ul class="clean">
+      <li><b>Be specific.</b> "I was sad" is a closed door. "Cold coffee and a clock I keep on watching" is a window — we climb right in.</li>
+      <li><b>Move forward.</b> Verse 2 shouldn't repeat verse 1. Something should change: time passes, you realize something, the story takes a step.</li>
+    </ul>
+    <p>This is the magic trade that turns ordinary into unforgettable: <b>the universal, through the specific.</b> The more exactly you name <i>your</i> one detail, the more <i>everyone</i> sees their own. Name the diner. Name the song that was playing. Name the exact street.</p>
+    <div class="ba">
+      <div class="col cold"><div class="h">✗ Cold</div><i>"It's been so hard since you went away / I think about you every single day"</i><span class="why">Could be about anyone, anything. Nothing to see, nothing to hold.</span></div>
+      <div class="col flame"><div class="h">✓ Flame</div><i>"Your coffee mug still sittin' where you left it / ring of cold gone hard around the rim"</i><span class="why">One real object. We feel the time that's passed, the not-cleaning-up, the ache — without the word "sad" ever showing up.</span></div>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> Verses are <b>specific and moving forward</b>. Show the object, not the feeling. The universal lives inside the exact detail.</div>
+    <div class="tryit"><h4>🔥 Your turn</h4>
+      <p>Take that feeling from Lesson 2. Now answer, in plain words: <b>What's one object in the room? What time is it? What were your hands doing?</b> Don't make it pretty yet — just true. Those three answers are your first verse.</p>
+    </div>
+  </div>
+
+  <div class="lesson" id="l4">
+    <div class="num"><div class="badge">4</div><h2>The Lift — getting from here to there</h2></div>
+    <div class="tag-line">the #1 thing that makes songs feel flat — fixed</div>
+    <p>Here's the most common place a song stalls: the verse ends, the chorus starts, and it feels like the song just… <i>changed lanes</i> with no signal. Flat. The fix has a name — the <b>pre-chorus</b>, also called the <b>lift</b>. It's a short section (often just one or two lines) whose entire job is to <b>build a ramp</b> from the calm verse up into the big chorus.</p>
+    <p>A lift does its work by <b>rising</b> and <b>tightening</b>:</p>
+    <ul class="clean">
+      <li><b>Climb.</b> The lines reach <i>upward</i> in energy — more urgent, often shorter, like a breath being held.</li>
+      <li><b>Point forward.</b> A lift makes a promise the chorus pays off. It says "here it comes."</li>
+      <li><b>Repeat a small thing.</b> One repeated phrase ("I can't, I can't…") coils the tension like a spring.</li>
+    </ul>
+    <p>You can <i>hear</i> it in the shape — verse sits low, the lift climbs, the chorus explodes:</p>
+    <pre class="song"><span class="t">[Verse]</span> …a road map folded up inside the glovebox     <span style="color:var(--sub)">(calm, low)</span>
+<span class="t">[Pre-Chorus]</span> but somethin' moved in me this mornin' —
+            I'm tired of the engine running cold      <span style="color:var(--sub)">(rising, tightening)</span>
+<span class="t">[Chorus]</span> THE LIGHT'S BEEN GREEN…                       <span style="color:var(--sub)">(release — the payoff)</span></pre>
+    <p>Not every song needs a pre-chorus — but the moment yours feels like it "jumps" awkwardly into the chorus, you now know exactly what's missing and how to build it. Even a single rising line will do it. <b>Transitions are just ramps.</b> Build the ramp.</p>
+    <div class="takeaway"><b>Takeaway:</b> A <b>pre-chorus</b> is a short rising ramp that lifts the verse into the chorus. When a song feels flat at the chorus, you're missing the ramp.</div>
+    <div class="tryit"><h4>🔥 Your turn</h4>
+      <p>Between your verse and your chorus seed, add <b>one line that reaches up</b> — a line that feels like "here it comes." Make it shorter and more urgent than your verse lines. Say all three out loud in a row. Feel the climb?</p>
+    </div>
+  </div>
+
+  <div class="lesson" id="l5">
+    <div class="num"><div class="badge">5</div><h2>The Bridge — the turn</h2></div>
+    <div class="tag-line">the moment the song looks at itself</div>
+    <p>The <b>bridge</b> shows up once, late in the song (usually after the second chorus), and it does something the rest of the song doesn't: it <b>turns</b>. New angle, new thought, the "but then" or the "what if I'm the one who…". It's the moment of realization, confession, or the camera pulling back to show the whole picture.</p>
+    <p>Why it works: by the time the bridge hits, the listener has heard your chorus twice. They're getting comfortable. The bridge breaks the pattern — pulls the energy <i>back</i>, says one new true thing — and that makes the <b>final chorus</b> land like a wave, because now it <i>means</i> something different.</p>
+    <div class="ba">
+      <div class="col flame" style="grid-column:1 / -1"><div class="h">✓ A bridge that turns</div>
+      <i>"Funny how the hardest part was looking up — / the whole time the road was open, the whole time the tank was full."</i>
+      <span class="why">The song was about being stuck. The bridge reveals the stuck was self-made — and suddenly the chorus ("the light's been green") means <i>I was the one idling.</i> Same words, deeper hit.</span></div>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> The bridge appears once, near the end, to say something <b>new</b> — the twist that recolors the final chorus.</div>
+  </div>
+
+  <!-- PART 2 -->
+  <div class="part" id="words"><span class="label">Part ② · Words That Catch Fire</span></div>
+
+  <div class="lesson" id="l6">
+    <div class="num"><div class="badge">6</div><h2>Show the smoke, not the fire</h2></div>
+    <div class="tag-line">the single biggest upgrade in this whole guide</div>
+    <p>If you remember one craft trick forever, make it this one. <b>Don't name the feeling. Show the thing that caused it, or the mark it left.</b> Saying "I was angry" makes us nod. Showing the dent in the drywall makes us <i>feel</i> the anger in our own chest. You become a camera, not a narrator.</p>
+    <p>Feelings are invisible. Make them visible — turn them into something a person can <b>see, hear, touch, or smell</b>:</p>
+    <div class="ba">
+      <div class="col cold"><div class="h">✗ Naming it (cold)</div>
+        <i>"I was so angry"<br>"I missed her so much"<br>"I finally felt free"<br>"I was scared in the crowd"</i></div>
+      <div class="col flame"><div class="h">✓ Showing it (flame)</div>
+        <i>"Learned my own name in the bruises on my hand"<br>"Her side of the bed still made"<br>"First green light in a year and I took it slow on purpose"<br>"Counted all the exits in a room full of friends"</i></div>
+    </div>
+    <p>See how the right column never <i>says</i> the feeling — yet you feel it harder? That's the trade. Reach for the <b>concrete noun</b>: the porch light, the cold coffee, the folded map, the made bed. Objects carry emotion the way a wire carries current.</p>
+    <div class="takeaway"><b>Takeaway:</b> Trade every "I felt ___" for an <b>image</b> — a thing we can see or touch. Show the evidence; let the listener feel the verdict.</div>
+    <div class="tryit"><h4>🔥 Your turn</h4>
+      <p>Write down a feeling in one word (angry, lost, hopeful, done…). Now <b>don't use that word</b> — instead, write the <i>thing</i>: what you'd see on the floor, what your body did, what was left behind. That line is worth ten that name the feeling.</p>
+    </div>
+  </div>
+
+  <div class="lesson" id="l7">
+    <div class="num"><div class="badge">7</div><h2>Flow — words have a beat</h2></div>
+    <div class="tag-line">make it sing, not just read</div>
+    <p>Spoken words already have a rhythm — some syllables you <b>punch</b>, some you throw away. Say "gui-<b>TAR</b>." The punch is on <i>TAR</i>. Now say it wrong — "<b>GUI</b>-tar" — feels broken, right? Songs run on this. The golden rule of flow:</p>
+    <p class="big" style="text-align:center;color:var(--flame)">Put the words you'd naturally punch on the strong beats.</p>
+    <p>You don't need to know where the beats <i>are</i> on paper — you already know by ear. Here's the only tool you need: <b>say your line out loud, like you mean it.</b> Wherever your voice naturally hits hardest is where the music wants to land. If a word feels twisted or rushed when you sing it, the line — not you — needs fixing.</p>
+    <p>Two more flow tools that cost nothing:</p>
+    <ul class="clean">
+      <li><b>One line = one breath.</b> If you can't say the line in a single breath at a comfortable pace, it's too long. Cut it.</li>
+      <li><b>Open mouth on the big notes.</b> You can hold and belt "<b>ahh</b>" or "<b>ohh</b>" forever. You can't belt "ick" or "tsk." So put your <i>biggest</i> words — the chorus peak — on open, round sounds.</li>
+    </ul>
+    <div class="takeaway"><b>Takeaway:</b> <b>Say it out loud.</b> The natural punch goes on the beat, each line fits one breath, and big notes ride open vowels (ah / oh).</div>
+    <div class="tryit"><h4>🔥 Your turn</h4>
+      <p>Take any line you've written and say it out loud three times like it's the realest thing you've ever said. Notice where your voice punches. Could you sing it in one breath? If it stumbles, change a word until it doesn't.</p>
+    </div>
+  </div>
+
+  <div class="lesson" id="l8">
+    <div class="num"><div class="badge">8</div><h2 style="font-size:24px">Rhyme — without the cheese</h2></div>
+    <div class="tag-line">rhyme is a tool, not a cage</div>
+    <p>Two things kill a line faster than anything: <b>forcing a rhyme</b>, and rhyming <b>too perfectly, too often.</b> The cure is to know that rhyme has way more shades than "cat / hat."</p>
+    <ul class="clean">
+      <li><b>Near rhyme (slant rhyme)</b> — close, not exact. <i>home / bone</i>, <i>shape / weight</i>, <i>mind / time</i>. This is what most modern songs actually use. It sounds <i>cool</i>; perfect rhyme can sound like a nursery rhyme.</li>
+      <li><b>Vowel rhyme</b> — just match the vowel sound, ignore the rest. <i>sky / fire / life</i> all share that "eye" — rhyme enough for a song. This unlocks <i>everything</i>.</li>
+      <li><b>Inside rhyme</b> — rhyme <i>inside</i> a line, not just at the end. "My <b>mind</b>'s <b>inclined</b> to wander." Feels skillful and rich.</li>
+    </ul>
+    <p>And the big permission slip: <b>you don't have to rhyme every line.</b> Rhyme the lines you want to <i>connect</i>. A great near-rhyme on the important line beats four forced perfect rhymes that bend your meaning out of shape. <b>Never twist what you're trying to say just to land a rhyme</b> — the meaning always wins.</p>
+    <div class="ba">
+      <div class="col cold"><div class="h">✗ Forced (cold)</div><i>"I'm feeling really blue today / so I will go outside and play"</i><span class="why">The rhyme drove the bus — and drove it somewhere dumb. Nobody "goes outside to play" about heartbreak.</span></div>
+      <div class="col flame"><div class="h">✓ Loose & true (flame)</div><i>"I'm learning how the quiet sounds / since you put the whole world down"</i><span class="why">"sounds / down" is a near-rhyme — close enough to satisfy, loose enough to keep the real meaning.</span></div>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> Use <b>near-rhyme and vowel-rhyme</b>, rhyme only the lines that matter, and never bend your meaning to force one.</div>
+  </div>
+
+  <div class="lesson" id="l9">
+    <div class="num"><div class="badge">9</div><h2>The Hook — the line that won't let go</h2></div>
+    <div class="tag-line">the spark people carry home</div>
+    <p>A <b>hook</b> is the single stickiest piece of your song — the bit someone hums hours later without meaning to. Usually it's your chorus's main line (your title). A great hook is:</p>
+    <ul class="clean">
+      <li><b>Short</b> — a handful of words. You can chant it.</li>
+      <li><b>Portable</b> — it survives outside the song. Someone could text it, or say it back to you.</li>
+      <li><b>Repeated</b> — it lands a few times across the song so it has room to dig in.</li>
+    </ul>
+    <p>Find your hook and you've found your title, your chorus center, and the gravity the whole song orbits. When in doubt, ask: <b>"If they only remember one line, which one do I want it to be?"</b> Build everything to deliver that line.</p>
+    <div class="takeaway"><b>Takeaway:</b> Your <b>hook</b> = the one short, repeatable line you want stuck in someone's head. Pick it on purpose; aim the whole song at it.</div>
+  </div>
+
+  <!-- PART 3 -->
+  <div class="part" id="suno"><span class="label">Part ③ · Lighting It Up With Suno</span></div>
+
+  <div class="lesson" id="l10">
+    <div class="num"><div class="badge">10</div><h2>Let the machine do the music</h2></div>
+    <div class="tag-line">know what's your job and what isn't</div>
+    <p>Here's the relief: <b>you don't make the music.</b> Suno does. It writes the melody, picks the chords, plays the instruments, and sings. That's why you didn't need a single chord in this guide. So what's <i>your</i> job? Exactly three things:</p>
+    <ul class="clean">
+      <li><b>The words</b> — your lyrics. (Parts ① and ② — you've got these now.)</li>
+      <li><b>The shape</b> — telling it where the verses and choruses go.</li>
+      <li><b>The style</b> — describing, in plain words, what you want it to <i>sound</i> like.</li>
+    </ul>
+    <p>Everything you learned about feeling, image, and structure is exactly what Suno can't invent on its own. <b>You bring the soul; it brings the band.</b> Don't waste effort trying to control things it already handles — spend your energy on the words and the shape, and let it surprise you on the rest.</p>
+    <div class="takeaway"><b>Takeaway:</b> Suno handles melody, chords, instruments, and singing. <b>You</b> handle words + structure + a style description. That's the whole deal.</div>
+  </div>
+
+  <div class="lesson" id="l11">
+    <div class="num"><div class="badge">11</div><h2>Steering the mood (a tiny dial)</h2></div>
+    <div class="tag-line">just enough "music" to point it the right way</div>
+    <p>You don't need theory — but a few plain words let you aim the <i>feeling</i> of the music. Think of these as dials you can mention in your style description. Turn them to match your lyric:</p>
+    <div class="ember-grid">
+      <div class="box"><h4>Bright ↔ Dark</h4><p>Say <b>"major"</b> for hopeful, warm, up. Say <b>"minor"</b> for sad, heavy, serious. One word changes the whole color.</p></div>
+      <div class="box"><h4>Slow ↔ Fast</h4><p><b>Slow</b> (say "ballad," "60–80 BPM") = intimate, heavy, room to breathe. <b>Fast</b> ("120+ BPM") = energy, urgency, dance.</p></div>
+      <div class="box"><h4>The genre word</h4><p>One genre word drags the whole sound: <b>"acoustic folk," "trap," "soul," "synthwave," "gospel," "rock ballad."</b> Pick the world your song lives in.</p></div>
+      <div class="box"><h4>The voice</h4><p>Describe the singer: <b>"raspy male," "breathy female alto," "soulful with runs," "spoken-word," "gentle."</b></p></div>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> Match the dials to the words. Sad lyric → <i>minor, slow</i>. Hopeful lyric → <i>major, driving</i>. You're pointing the music at the feeling.</div>
+  </div>
+
+  <div class="lesson" id="l12">
+    <div class="num"><div class="badge">12</div><h2>The two boxes</h2></div>
+    <div class="tag-line">where the words go, and how to tag the shape</div>
+    <p>In Suno you fill in two things. Get these right and you're done.</p>
+    <p><b>① The Style box</b> — a plain description of the sound. Stack it like this, separated by commas, most important first:</p>
+    <p style="text-align:center"><span class="mono">[genre] + [mood] + [bright/dark + slow/fast] + [a couple instruments] + [the voice]</span></p>
+    <p>Example: <span class="mono">warm acoustic folk-rock, hopeful and driving, major key, 104 BPM, acoustic guitar + pedal steel + brushed drums, earnest raspy male vocal</span></p>
+    <p><b>② The Lyrics box</b> — your words, with the <b>shape</b> marked using tags in square brackets on their own line. This is how you tell Suno where the blocks go:</p>
+    <p style="margin:8px 0">
+      <span class="tag">[Intro]</span> <span class="tag">[Verse]</span> <span class="tag">[Pre-Chorus]</span> <span class="tag">[Chorus]</span> <span class="tag">[Post-Chorus]</span> <span class="tag">[Bridge]</span> <span class="tag">[Outro]</span> <span class="tag">[Guitar Solo]</span>
+    </p>
+    <p>You can also whisper directions inline in parentheses, like <span class="mono">(softly)</span> or <span class="mono">(big harmonies)</span> or <span class="mono">(ad-lib: yeah)</span>.</p>
+    <p><b>The mindset that matters most:</b> the first result won't always nail it. That's normal — it's a slot machine with taste. <b>Re-roll without mercy.</b> Generate it five times, keep the best, tweak a word, go again. The artists who get great results are just the ones who didn't stop at the first try.</p>
+    <ul class="clean">
+      <li><b>Do</b> give it your exact lyrics and clear tags. <b>Do</b> describe the voice and mood.</li>
+      <li><b>Don't</b> write a vague style like "good emotional song" — it'll hand you something generic. Specific in, specific out.</li>
+      <li><b>To avoid that "AI sameness":</b> use a clear genre, name the voice, break perfect sing-song rhyme, and control your own hook. Your real images are the thing it can't fake.</li>
+    </ul>
+    <div class="takeaway"><b>Takeaway:</b> <b>Style box</b> = describe the sound. <b>Lyrics box</b> = your words + <span class="tag">[tags]</span> for the shape. Then re-roll until it sings.</div>
+  </div>
+
+  <!-- THE FORGE -->
+  <div class="part" id="forge"><span class="label">🔨 The Forge · One Full Build, Cold to Flame</span></div>
+  <div class="lesson">
+    <h2 style="margin-top:0">Watch a song get built from nothing</h2>
+    <p>Let's run the whole pipeline once, so you see every tool work together. We start with a raw, messy feeling and end with a finished, tagged song ready to paste into Suno.</p>
+
+    <p><b>Step 1 — The cold feeling (just dump it).</b></p>
+    <pre class="song">"I keep waiting for my real life to start. Like I'm stuck at a light.
+But maybe nothing's stopping me. Maybe I've just been sitting here scared."</pre>
+
+    <p><b>Step 2 — Find the one true image.</b> "Stuck at a light" is gold — everyone's felt it. Flip it into a hook: what if the light has <i>already been green</i> and you never went? That's the whole song in one picture.</p>
+    <p><b>Step 3 — Build the chorus</b> (simple, universal, repeated, holds the title):</p>
+    <pre class="song"><span class="t">[Chorus]</span>
+The light's been green, the light's been green,
+I've been sittin' here just idling.
+All this time I thought I'd missed my shot —
+the light's been green, so I'm gone.</pre>
+
+    <p><b>Step 4 — Write a verse</b> (specific, an object, moving forward — Lessons 3 & 6):</p>
+    <pre class="song"><span class="t">[Verse]</span>
+Cold coffee and a clock I keep on watchin',
+made a hundred plans I filed away as "someday."
+There's a road map folded up inside the glovebox,
+worn soft on the crease where I was gonna drive away.</pre>
+
+    <p><b>Step 5 — Add the lift</b> (a short rising ramp — Lesson 4):</p>
+    <pre class="song"><span class="t">[Pre-Chorus]</span>
+But somethin' moved in me this mornin' (this mornin'),
+I'm tired of the engine runnin' cold —</pre>
+
+    <p><b>Step 6 — A second verse that moves</b>, then the <b>bridge that turns</b> (Lesson 5):</p>
+    <pre class="song"><span class="t">[Verse]</span>
+Caught my own eyes in the rearview, honest,
+said the kind of thing you only say alone.
+Every red light taught me how to wait too good —
+now the only thing I'm waitin' on is gone.
+
+<span class="t">[Bridge]</span>
+Funny how the hardest part was lookin' up…
+the whole time the road was open, the whole time the tank was full.</pre>
+
+    <p><b>Step 7 — Write the Style box</b> (match the dials to the words — hopeful, driving — Lessons 10–11):</p>
+    <pre class="song">warm Americana folk-rock, hopeful and building, major key, 104 BPM steady backbeat,
+acoustic guitar + brushed drums + pedal steel + warm bass + a little organ,
+earnest raspy male vocal, full band on the last chorus</pre>
+
+    <p><b>Step 8 — Assemble the whole thing, tagged</b>, and paste into Suno's Lyrics box:</p>
+    <pre class="song"><span class="t">[Intro]</span>
+<span class="t">[Verse]</span>
+Cold coffee and a clock I keep on watchin'…
+<span class="t">[Pre-Chorus]</span>
+But somethin' moved in me this mornin' (this mornin')…
+<span class="t">[Chorus]</span>
+The light's been green, the light's been green…
+<span class="t">[Verse]</span>
+Caught my own eyes in the rearview, honest…
+<span class="t">[Pre-Chorus]</span>
+But somethin' moved in me this mornin'…
+<span class="t">[Chorus]</span>
+The light's been green, the light's been green…
+<span class="t">[Bridge]</span>
+Funny how the hardest part was lookin' up…
+<span class="t">[Chorus]</span> (bigger, full band, harmonies)
+The light's been green, the light's been green…
+<span class="t">[Outro]</span>
+…so I'm gone.</pre>
+    <p>That's it. A real song, forged from a single restless thought — verses with images, a chorus anyone can sing, a ramp, a turn, and a sound described in plain words. <b>Re-roll it a few times, keep the best, and you've made a record.</b></p>
+    <div class="takeaway"><b>The whole pipeline:</b> dump the feeling → find the one image → build the chorus → write specific verses → add the lift → turn it at the bridge → describe the sound → tag the shape → generate &amp; re-roll.</div>
+  </div>
+
+  <!-- TROUBLESHOOTING -->
+  <div class="part"><span class="label">🩹 When It's Not Working</span></div>
+  <div class="lesson">
+    <h2 style="margin-top:0">The fix-it page</h2>
+    <p>Every writer gets stuck — the great ones just know that <b>stuck isn't failure, it's a signpost</b> pointing straight at the tool you need. Find your problem below; grab the fix.</p>
+    <div class="ember-grid">
+      <div class="box"><h4>😴 "It feels flat / boring"</h4><p>You're missing <b>contrast</b>. Make the verse smaller and quieter so the chorus feels bigger by comparison. Add a <b>pre-chorus ramp</b> (Lesson 4). A song has to rise and fall.</p></div>
+      <div class="box"><h4>🥱 "My chorus is weak"</h4><p><b>Simplify it.</b> Find the ONE line. Make it the feeling <i>everyone</i> shares — not your exact details. Put the title in it. Say the main line twice.</p></div>
+      <div class="box"><h4>🤖 "It all sounds generic (Suno)"</h4><p>Be <b>specific</b> in the style box, <b>name the voice</b>, feed it <b>real images</b> instead of clichés, break perfect sing-song rhyme — and <b>re-roll</b>. Specific in, specific out.</p></div>
+      <div class="box"><h4>🧱 "I can't finish it"</h4><p>You don't need a bridge or a second verse. <b>One verse + a chorus is a whole song.</b> End on your hook. Finished beats perfect, every time.</p></div>
+      <div class="box"><h4>🧀 "The words feel forced / cheesy"</h4><p>You bent your meaning to land a rhyme. Loosen to <b>near-rhyme</b>, cut the filler words, and <b>say it out loud</b> — your own ear will catch the fake line.</p></div>
+      <div class="box"><h4>🚫 "I don't know what to write about"</h4><p>Go back to the <b>two-minute fire-starter</b> at the top. Write the <i>smallest true thing</i> — one object, one moment. Small and true beats big and vague.</p></div>
+      <div class="box"><h4>🎤 "It doesn't sing right"</h4><p><b>Say the line out loud like you mean it.</b> Fix the word that twists your mouth. Shorten any line you can't get out in one breath.</p></div>
+      <div class="box"><h4>✂️ "It's good, but not great"</h4><p>Time for the <b>second pass</b>: sharpen one image, cut three filler words, swap one named feeling for a thing we can see. Great songs are <i>rewritten</i>, not written.</p></div>
+    </div>
+    <div class="takeaway"><b>Takeaway:</b> Stuck is a signpost, not a stop sign. Every wall here has a one-move fix — and "finish it imperfectly" always beats "perfect it forever."</div>
+  </div>
+
+  <!-- YOUR TURN -->
+  <div class="part" id="yourturn"><span class="label">✍️ Your Turn · Templates &amp; Sparks</span></div>
+  <div class="lesson">
+    <h2 style="margin-top:0">Fill-in-the-blank, so you're never staring at nothing</h2>
+
+    <p><b>The Song Skeleton</b> — copy this and fill it in. The shape is already built for you:</p>
+    <pre class="song"><span class="t">[Verse 1]</span>  (an object · a time of day · what your hands did · what was said)
+____________________________________________
+<span class="t">[Pre-Chorus]</span>  (one or two lines that reach UP — "here it comes")
+____________________________________________
+<span class="t">[Chorus]</span>  (your one true line × repeat · the feeling everyone shares · the title)
+____________________________________________
+<span class="t">[Verse 2]</span>  (move the story forward — something changed)
+____________________________________________
+<span class="t">[Pre-Chorus]</span>  (same lift)
+<span class="t">[Chorus]</span>  (same)
+<span class="t">[Bridge]</span>  (the turn — one new true thing)
+____________________________________________
+<span class="t">[Chorus]</span>  (last one — biggest)</pre>
+
+    <p><b>Feeling → Image worksheet</b> — the most important drill in the book:</p>
+    <pre class="song">The feeling (one word):  _______________
+Don't use that word. Instead:
+  • What would I see on the floor / table / wall?  _______________
+  • What did my body do?                            _______________
+  • What got left behind?                           _______________
+Pick the strongest one. That's your line.</pre>
+
+    <p><b>Three sparks to start a song right now</b> (steal any of them):</p>
+    <ul class="clean">
+      <li>Write about <b>a door</b> — one you walked through, or one you couldn't.</li>
+      <li>Write about <b>the version of yourself you're becoming</b> — and what the old one would say.</li>
+      <li>Write about <b>a thing someone left behind</b> — and what it still does to the room.</li>
+    </ul>
+    <div class="takeaway"><b>Takeaway:</b> You never have to start from a blank page. Start from a skeleton, a feeling, or a spark — and let the tools do the rest.</div>
+  </div>
+
+  <!-- EMBER CARD -->
+  <div class="part" id="embercard"><span class="label">🃏 The Ember Card · Keep This Close</span></div>
+  <div class="lesson">
+    <h2 style="margin-top:0">Everything that matters, on one screen</h2>
+    <p class="big" style="color:var(--flame)">When you forget where to start, read this.</p>
+    <div class="ember-grid">
+      <div class="box"><h4>🗺️ The shape of a song</h4><p><b>Intro → Verse → Pre-Chorus → Chorus → Verse → Pre-Chorus → Chorus → Bridge → Last Chorus (biggest) → Outro.</b> Verse = story, Chorus = the shared feeling, Pre-chorus = the ramp, Bridge = the turn.</p></div>
+      <div class="box"><h4>🔥 The chorus rule</h4><p>Simplest, widest, most-repeated part. Holds your <b>title</b>. Don't explain — just land the feeling everyone's felt. Say the main line twice.</p></div>
+      <div class="box"><h4>👁️ The #1 craft move</h4><p><b>Show the smoke, not the fire.</b> Never write "I was sad." Write the cold coffee, the porch light, the made bed. Show the thing; let them feel it.</p></div>
+      <div class="box"><h4>🎵 Make it flow</h4><p><b>Say it out loud.</b> The natural punch goes on the beat. One line = one breath. Put big notes on open vowels (ah / oh).</p></div>
+      <div class="box"><h4>🎯 Rhyme</h4><p>Near-rhyme &amp; vowel-rhyme are cooler than perfect rhyme. Rhyme only the lines that matter. <b>Never bend your meaning to force a rhyme.</b></p></div>
+      <div class="box"><h4>🤖 Suno: the two boxes</h4><p><b>Style box:</b> <span class="mono" style="font-size:11.5px">genre + mood + bright/dark + slow/fast + instruments + voice</span>. <b>Lyrics box:</b> your words + <span class="tag" style="font-size:11px">[Verse]</span> <span class="tag" style="font-size:11px">[Chorus]</span> tags. Then <b>re-roll without mercy.</b></p></div>
+    </div>
+    <p class="note" style="margin-top:14px;color:var(--sub);text-align:center">The full deep reference for any of these is in <b>The Bard's Codex</b>. This card is all you need to start.</p>
+  </div>
+
+  <footer>
+    <span class="big">🔥 The fire was always yours. Now you know where the tools are kept.</span>
+    From Cold to Flame · part of <b>The Bardcore Forge</b><br>
+    <span style="font-size:13px">↩ <a href="The Bardcore Forge (Start Here).html" style="color:var(--ember)">Start Here</a> · 📜 <a href="The Bard's Codex.html" style="color:var(--ember)">The Bard's Codex</a> (full reference) · ⚒️ <a href="Bardcore Engineering.html" style="color:var(--ember)">Bardcore Engineering</a> (Suno guide)</span>
+  </footer>
+
+</div>
+</body>
+</html>

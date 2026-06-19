@@ -1,0 +1,10 @@
+# third-party source PDFs (downloaded reference material — not ours to publish)
+_sources/
+
+# python
+__pycache__/
+*.pyc
+
+# os cruft
+.DS_Store
+Thumbs.db

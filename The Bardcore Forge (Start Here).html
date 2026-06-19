@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bardcore Forge — Start Here</title>
+<style>
+  :root{
+    --bg:#130f0b; --card:#1d1712; --card2:#271e16; --ink:#f4ede1; --sub:#b6a892;
+    --line:#3a2f24; --ember:#f97316; --flame:#fbbf24; --violet:#8b5cf6; --teal:#5ec5b6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; color:var(--ink);
+    background:
+      radial-gradient(1100px 520px at 50% -10%, #421705 0%, transparent 58%),
+      radial-gradient(800px 500px at 90% 12%, #2a1335 0%, transparent 55%),
+      var(--bg);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px; line-height:1.6; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  .wrap{max-width:980px; margin:0 auto; padding:34px 22px 70px;}
+
+  header.hero{text-align:center; padding:52px 22px 40px; border:1px solid var(--line);
+    border-radius:26px; position:relative; overflow:hidden;
+    background:linear-gradient(165deg,#2a160a 0%, #1a120c 55%, #14101a 100%);}
+  header.hero::after{content:""; position:absolute; inset:0;
+    background:radial-gradient(620px 240px at 50% 0, rgba(249,115,22,.22), transparent 70%);}
+  .hero .anvil{font-size:42px; filter:drop-shadow(0 0 16px rgba(249,115,22,.6));}
+  .hero h1{font-size:58px; margin:8px 0 0; font-weight:800; letter-spacing:1px; line-height:1;
+    background:linear-gradient(92deg,#fde68a,#f97316,#c084fc);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;}
+  .hero .sub{color:#e8cba0; font-size:19px; margin-top:14px; font-weight:600;}
+  .hero .intro{color:var(--sub); font-size:16px; max-width:620px; margin:16px auto 0;}
+
+  /* the path */
+  .path{display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+    margin:30px auto 6px; max-width:760px;}
+  .step{flex:1; min-width:150px; background:var(--card); border:1px solid var(--line);
+    border-radius:14px; padding:15px 14px; text-align:center;}
+  .step .e{font-size:24px;} .step b{display:block; color:#fff; margin-top:4px; font-size:14px;}
+  .step span{color:var(--sub); font-size:12.5px;}
+  .path .arrow{color:var(--ember); font-size:22px; font-weight:800;}
+  @media(max-width:640px){ .path{flex-direction:column;} .path .arrow{transform:rotate(90deg);} }
+
+  .startcue{margin:32px 0 8px; text-align:center; color:var(--flame); font-weight:700;
+    letter-spacing:3px; text-transform:uppercase; font-size:13px;}
+
+  .cards{display:flex; flex-direction:column; gap:18px; margin-top:14px;}
+  .work{display:flex; gap:20px; align-items:flex-start; background:var(--card);
+    border:1px solid var(--line); border-radius:18px; padding:22px 24px; text-decoration:none; color:inherit;
+    transition:.16s; box-shadow:0 16px 40px -30px rgba(0,0,0,.9); position:relative; overflow:hidden;}
+  .work:hover{transform:translateY(-3px); border-color:var(--accent,#5a3a1f);}
+  .work::before{content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--accent);}
+  .work .ico{font-size:40px; flex-shrink:0; width:58px; text-align:center;
+    filter:drop-shadow(0 0 12px color-mix(in srgb,var(--accent) 55%, transparent));}
+  .work .body{flex:1;}
+  .work .kicker{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); font-weight:700;}
+  .work h2{margin:3px 0 5px; font-size:24px; font-weight:800;}
+  .work p{margin:0 0 8px; color:var(--ink);}
+  .work .who{color:var(--sub); font-size:13.5px;}
+  .work .go{display:inline-block; margin-top:12px; padding:9px 18px; border-radius:999px; font-weight:800;
+    font-size:14px; color:#160d05; background:linear-gradient(150deg,var(--flame),var(--accent));}
+  .work.w1{--accent:var(--ember);} .work.w2{--accent:var(--violet);} .work.w3{--accent:var(--teal);}
+  .badge-new{position:absolute; top:16px; right:18px; background:var(--ember); color:#160d05;
+    font-size:11px; font-weight:800; padding:3px 11px; border-radius:999px; letter-spacing:.5px;}
+
+  .manifesto{margin-top:36px; background:linear-gradient(165deg,#241a11,#1a130d);
+    border:1px solid #4a3320; border-radius:18px; padding:26px 28px; text-align:center;}
+  .manifesto p{margin:8px auto; max-width:680px; font-size:16px;}
+  .manifesto .big{font-size:21px; color:var(--flame); font-weight:700;}
+  .manifesto b{color:#fff;}
+
+  footer{margin-top:42px; text-align:center; color:var(--sub); font-size:14px;
+    border-top:1px solid var(--line); padding-top:24px;}
+  footer .fire{color:var(--flame); font-weight:700;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="anvil">⚒️🔥</div>
+    <h1>THE BARDCORE FORGE</h1>
+    <div class="sub">From the first spark to a finished track.</div>
+    <p class="intro">Everyone carries a fire — something true they need to say. Most people were just never shown how to shape it into a song. This is the place that shows them. Three guides, one path, no music knowledge required.</p>
+  </header>
+
+  <div class="path">
+    <div class="step"><div class="e">🔥</div><b>1 · Spark</b><span>Find your fire &amp; get it on the page</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="e">🛠️</div><b>2 · Shape</b><span>Learn the craft — verses, choruses, the turn</span></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="e">🎼</div><b>3 · Forge</b><span>Turn it into a real track with Suno</span></div>
+  </div>
+
+  <div class="startcue">★ New here? Start with the first one ★</div>
+
+  <div class="cards">
+
+    <a class="work w1" href="From Cold to Flame.html">
+      <span class="badge-new">START HERE</span>
+      <div class="ico">🔥</div>
+      <div class="body">
+        <div class="kicker">The Beginner's Course</div>
+        <h2>From Cold to Flame</h2>
+        <p>A start-from-nothing path that turns what you feel into songs you're proud of — finding your material, building verses and choruses, and bringing it to life on Suno. Learn-by-doing, one tool at a time.</p>
+        <div class="who">👉 For: anyone who has something to say but doesn't know how to make it a song. <b>If you only open one, open this.</b></div>
+        <span class="go">Begin the course →</span>
+      </div>
+    </a>
+
+    <a class="work w2" href="The Bard's Codex.html">
+      <div class="ico">📜</div>
+      <div class="body">
+        <div class="kicker">The Master Reference</div>
+        <h2>The Bard's Codex</h2>
+        <p>The complete craft cheat-sheet — every tool of music &amp; poetry on illustrated panels: the circle of fifths, modes, song structure, rhyme, poetic form, genre recipes, the Emotional Console, and a one-screen quick card.</p>
+        <div class="who">👉 For: when you've got the basics and want to level up, or look something up fast.</div>
+        <span class="go">Open the reference →</span>
+      </div>
+    </a>
+
+    <a class="work w3" href="Bardcore Engineering.html">
+      <div class="ico">⚒️</div>
+      <div class="body">
+        <div class="kicker">The Suno Prompt Guide</div>
+        <h2>Bardcore Engineering</h2>
+        <p>The original guide to talking to the machine — how to shape a song's emotion with keys, modes, time signatures, tempo and meta-tags so Suno gives you the sound you actually hear in your head.</p>
+        <div class="who">👉 For: getting deliberate, theory-smart results out of Suno.</div>
+        <span class="go">Read the guide →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="manifesto">
+    <p class="big">You are not learning to <i>become</i> an artist.</p>
+    <p>You already are one. This is just where the tools are kept — and the door is open.</p>
+    <p style="color:var(--sub); font-size:14px; margin-top:14px">Pick a guide above. Start anywhere. The fire does the rest.</p>
+  </div>
+
+  <footer>
+    <span class="fire">🔥 The Bardcore Forge</span> — a complete path from feeling to finished song.<br>
+    Keep these files together in one folder so the links work.
+  </footer>
+
+</div>
+</body>
+</html>

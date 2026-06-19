@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bardcore Engineering — Forge Tracks with Theory-Smart Prompts</title>
+<style>
+  :root{
+    --bg:#0a0e0f; --bg2:#0e1416; --card:#121a1c; --card2:#172224;
+    --ink:#eaf3f2; --sub:#8fa6a4; --line:#243234;
+    --teal:#2dd4bf; --cyan:#22d3ee; --accent:var(--teal);
+    --ember:#f59e0b; --violet:#a78bfa;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; color:var(--ink);
+    background:
+      radial-gradient(1100px 620px at 50% -10%, #07312e 0%, transparent 58%),
+      radial-gradient(900px 500px at 100% 5%, #052a33 0%, transparent 52%),
+      var(--bg);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px; line-height:1.6; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  .wrap{max-width:1240px; margin:0 auto; padding:30px 22px 64px;}
+
+  header.hero{text-align:center; padding:42px 22px 32px; border:1px solid var(--line);
+    border-radius:22px; position:relative; overflow:hidden;
+    background:linear-gradient(165deg,#0c2a2a 0%, #0c1618 60%, #0a1012 100%);}
+  header.hero::after{content:""; position:absolute; inset:0;
+    background:radial-gradient(620px 220px at 50% 0, rgba(45,212,191,.18), transparent 70%);}
+  .hero .ico{font-size:38px; filter:drop-shadow(0 0 14px rgba(45,212,191,.55));}
+  .hero h1{font-size:48px; margin:6px 0 0; font-weight:800; letter-spacing:.4px; line-height:1.04;
+    background:linear-gradient(92deg,#a7f3eb,#2dd4bf,#22d3ee);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;}
+  .hero .sub{color:#bfe9e3; font-size:17px; margin-top:10px; font-weight:600;}
+  .hero .intro{color:var(--sub); font-size:15px; max-width:680px; margin:14px auto 0;}
+
+  .toolbar{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:18px 0 8px;}
+  .chip{font-size:12px; padding:6px 13px; border-radius:999px; border:1px solid var(--line);
+    background:var(--card); color:var(--sub); text-decoration:none; transition:.15s;}
+  .chip:hover{color:#fff; border-color:var(--accent); transform:translateY(-1px);}
+
+  section{margin-top:34px; scroll-margin-top:14px;}
+  .sec-head{display:flex; align-items:center; gap:12px; margin:0 2px 14px;
+    padding-bottom:10px; border-bottom:2px solid var(--accent);}
+  .sec-head .e{font-size:25px; filter:drop-shadow(0 0 8px color-mix(in srgb,var(--accent) 55%,transparent));}
+  .sec-head h2{margin:0; font-size:23px; font-weight:800;}
+  .sec-head .kicker{margin-left:auto; color:var(--sub); font-size:11px; text-transform:uppercase; letter-spacing:2px;}
+
+  .lead{font-size:15.5px; color:var(--ink); max-width:880px;}
+  .grid{column-gap:16px;} .g3{column-width:380px;} .g2{column-width:560px;}
+  .card{break-inside:avoid; background:var(--card); border:1px solid var(--line);
+    border-radius:14px; padding:15px 16px 13px; margin:0 0 16px;
+    box-shadow:0 12px 32px -24px rgba(0,0,0,.9);}
+  .card.full{column-span:all;}
+  .card h3{margin:0 0 9px; font-size:15px; display:flex; align-items:center; gap:8px; color:#fff;}
+  .card h3::before{content:""; width:9px; height:9px; border-radius:3px; background:var(--accent);
+    box-shadow:0 0 10px var(--accent);}
+  .card h4{margin:12px 0 5px; font-size:11px; text-transform:uppercase; letter-spacing:1.4px; color:var(--accent);}
+  .card p{margin:8px 0;} .card b{color:#fff;}
+
+  table{width:100%; border-collapse:collapse; font-size:12px; margin:4px 0;}
+  th,td{text-align:left; padding:6px 9px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{background:color-mix(in srgb,var(--accent) 15%, var(--card2)); color:#fff; font-weight:700;
+    font-size:10.5px; text-transform:uppercase; letter-spacing:.5px;}
+  tbody tr:nth-child(even){background:rgba(255,255,255,.02);}
+  tbody tr:hover{background:color-mix(in srgb,var(--accent) 8%, transparent);}
+  td b{color:#fff;}
+
+  .prompt{margin:8px 0; padding:10px 13px 10px 36px; position:relative; border-radius:10px;
+    background:color-mix(in srgb,var(--accent) 9%, transparent); border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
+    font-size:13px; font-style:italic; color:#d6f5f0;}
+  .prompt::before{content:"🎹"; position:absolute; left:11px; top:9px; font-style:normal; font-size:13px;}
+  .prompt b{color:#fff; font-style:normal;}
+
+  .defs{margin:0; padding:0; list-style:none;}
+  .defs li{padding:5px 0; border-bottom:1px dashed rgba(255,255,255,.06);}
+  .defs li:last-child{border-bottom:none;}
+  .term{color:var(--accent); font-weight:700;}
+
+  code,.mono{font-family:"Consolas","SF Mono",ui-monospace,monospace; font-size:12.5px;
+    background:rgba(45,212,191,.12); color:#b9f3ea; padding:1px 6px; border-radius:5px;}
+  pre.box{background:#0a1213; border:1px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family:"Consolas",monospace; font-size:12.5px; line-height:1.7; color:#cfeee9; white-space:pre-wrap; margin:9px 0;}
+  pre.box .t{color:var(--accent); font-weight:700;}
+  .tagchips{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0;}
+  .tagchips span{font-family:"Consolas",monospace; font-size:12px; background:var(--card2);
+    border:1px solid var(--line); color:#b9f3ea; padding:3px 9px; border-radius:6px;}
+
+  .viz{margin:8px 0 2px;} .viz svg{width:100%; height:auto; display:block;}
+  .cap{font-size:10.5px; color:var(--sub); text-align:center; margin-top:3px;}
+
+  .editor{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:8px 0;}
+  @media(max-width:560px){ .editor{grid-template-columns:1fr;} }
+  .editor .pane{border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#0c1314;}
+  .editor .pane .ph{font-size:10.5px; text-transform:uppercase; letter-spacing:1px; padding:7px 11px;
+    border-bottom:1px solid var(--line); color:var(--sub); font-weight:700;}
+  .editor .blob{padding:11px; font-size:11px; color:#7e928f; line-height:1.5;}
+  .editor .seg{padding:7px 11px; font-size:11.5px; border-bottom:1px solid var(--line); display:flex; gap:8px; align-items:center;}
+  .editor .seg:last-child{border-bottom:none;}
+  .editor .seg .lbl{font-family:"Consolas",monospace; color:var(--accent); font-size:11px; min-width:62px;}
+  .editor .seg .bar{flex:1; height:6px; border-radius:3px; background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 55%,transparent),transparent);}
+
+  .note{color:var(--sub); font-size:12px; margin:6px 0 0;}
+  .pill{display:inline-block; font-size:10px; padding:2px 9px; border-radius:999px;
+    background:color-mix(in srgb,var(--accent) 18%,transparent); color:#fff; border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);}
+  .callout{background:linear-gradient(165deg,#0f2422,#0c1718); border:1px solid #1d3b38; border-radius:14px;
+    padding:18px 20px; margin:14px 0;}
+  .callout b{color:var(--accent);}
+
+  footer{margin-top:46px; text-align:center; color:var(--sub); font-size:13px;
+    border-top:1px solid var(--line); padding-top:22px;}
+  footer a{color:var(--accent); text-decoration:none;}
+  footer .fam{color:var(--ink); font-weight:600;}
+  .topbtn{position:fixed; left:16px; bottom:16px; z-index:99; width:44px; height:44px; border-radius:50%;
+    background:var(--card2); color:var(--ink); border:1px solid var(--line); font-size:19px; cursor:pointer;}
+  .topbtn:hover{border-color:var(--teal); color:#fff;}
+  .printbtn{position:fixed; right:16px; bottom:16px; z-index:99; background:var(--teal); color:#072420;
+    border:none; border-radius:999px; padding:11px 18px; font-size:13px; font-weight:800; cursor:pointer;
+    box-shadow:0 8px 24px -8px rgba(45,212,191,.7);}
+  /* reliability badges + operator helpers */
+  .rel{display:inline-block; font-size:9px; font-weight:800; padding:1px 7px; border-radius:999px;
+    letter-spacing:.3px; text-transform:uppercase; vertical-align:middle;}
+  .rel-v{background:rgba(52,211,153,.16); color:#6ee7b7; border:1px solid #2f6f5c;}
+  .rel-b{background:rgba(245,158,11,.15); color:#fcd34d; border:1px solid #6b4e1d;}
+  .rel-p{background:rgba(248,113,113,.15); color:#fca5a5; border:1px solid #6b2f2f;}
+  .twobox{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:8px 0;}
+  @media(max-width:560px){ .twobox{grid-template-columns:1fr;} }
+  .twobox .b{border:1px solid var(--line); border-radius:12px; padding:13px 15px; background:#0c1314;}
+  .twobox .b h5{margin:0 0 7px; font-size:13px; color:#fff; display:flex; align-items:center; gap:7px;}
+  .twobox .b.style{border-color:#2f6f5c;} .twobox .b.lyr{border-color:#6b4e1d;}
+  .warn{background:rgba(248,113,113,.06); border:1px solid #5a2f2f; border-radius:10px;
+    padding:9px 13px; margin:9px 0; font-size:12px;}
+  .warn b{color:#fca5a5;}
+  .band{margin:46px 0 6px; text-align:center;}
+  .band span{display:inline-block; padding:7px 20px; border:1px solid var(--line); border-radius:999px;
+    background:var(--card); color:var(--teal); font-size:12px; letter-spacing:4px; text-transform:uppercase; font-weight:700;}
+  .card.full{overflow-x:auto;}
+  @media(max-width:640px){ .card.full table{min-width:560px;} }
+  @media print{ .printbtn,.topbtn,.toolbar{display:none;} }
+</style>
+</head>
+<body>
+<button class="topbtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" title="Back to top">↑</button>
+<button class="printbtn" onclick="window.print()">🖨 Save / Print</button>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="ico">⚒️</div>
+    <h1>Bardcore Engineering</h1>
+    <div class="sub">Forge Tracks with Theory-Smart Prompts</div>
+    <p class="intro">You don't need to be a musician to make intentional music with Suno — you need a <b>working vocabulary</b>. This guide shows how the AI thinks, and how a few precise words about <b>key, mode, time signature, tempo, meter, and meta-tags</b> let you bend a song toward the sound in your head, instead of settling for whatever generic thing comes out.</p>
+  </header>
+
+  <div class="toolbar">
+    <a class="chip" href="#ai">🧠 How the AI Works</a>
+    <a class="chip" href="#keys">🔑 Keys &amp; Mood</a>
+    <a class="chip" href="#modes">🎚️ Modes</a>
+    <a class="chip" href="#time">⏱️ Time Signatures</a>
+    <a class="chip" href="#tempo">🏃 Tempo</a>
+    <a class="chip" href="#meter">🪶 Poetic Meter</a>
+    <a class="chip" href="#tags">🏷️ Meta Tags</a>
+    <a class="chip" href="#fieldlaw" style="border-color:#2f6f5c">🎛️ Field Law</a>
+    <a class="chip" href="#works">✅ What Works</a>
+    <a class="chip" href="#formula">🧱 Style Formula</a>
+    <a class="chip" href="#vocals">🎤 Vocal Stack</a>
+    <a class="chip" href="#pronounce">🗣️ Pronounce It</a>
+    <a class="chip" href="#typography">⌨️ Typography</a>
+    <a class="chip" href="#fixes">🩹 Fixes</a>
+  </div>
+
+  <!-- HOW AI WORKS -->
+  <section id="ai">
+    <div class="sec-head"><span class="e">🧠</span><h2>How the AI Actually Works</h2><span class="kicker">why prompting matters</span></div>
+    <p class="lead">Suno can feel like magic — type something, a song appears. Under the hood it's more like a <b>hyper-educated guess machine</b>: it doesn't "understand" music or emotion, it generates by matching patterns and probabilities from the massive amount of data it trained on. That's <i>why</i> vague prompts give generic results — and why good prompting is the whole game.</p>
+    <div class="grid g3">
+      <div class="card">
+        <h3>Pattern matching + probability</h3>
+        <p>Think of the AI like a <b>weighted dice roller</b>. It rolls across learned patterns — chord progressions, vocal styles, lyrical phrases, instrument choices — and the more commonly something appeared in training, the more likely it gets picked.</p>
+        <p class="note">It isn't copying. It's playing the odds. That's why pop and country drift toward sounding alike unless you tell it otherwise.</p>
+      </div>
+      <div class="card">
+        <h3>Your prompt = a set of dials</h3>
+        <p>Every word pushes the song toward a different region of the model's "probability space."</p>
+        <ul class="defs">
+          <li><span class="term">"lo-fi trap"</span> → vinyl textures + 808s</li>
+          <li><span class="term">"melancholic post-rock, ambient swells"</span> → different chords, guitar FX, progressions</li>
+        </ul>
+        <p class="note">Prompting is shaping the <b>gravity</b> of the song. The more precise you are, the harder it bends toward what you actually want.</p>
+      </div>
+      <div class="card">
+        <h3>Why prompts sound "samey"</h3>
+        <p>If you don't vary your inputs — especially intros, keys, and structure — you get songs that feel like remixes of each other, because:</p>
+        <ul class="defs">
+          <li>Genre defaults are heavily weighted (country ≈ 4–5 chords, verse-chorus-verse).</li>
+          <li>Left blank, Suno fills gaps with <b>statistical averages</b>.</li>
+          <li>Even lyrics fall into overused rhyme patterns (the "AI-isms": NEON, lazy AABB) unless you change meter, structure, or vocabulary.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEYS -->
+  <section id="keys">
+    <div class="sec-head"><span class="e">🔑</span><h2>Key — Major vs Minor = Bright vs Dark</h2><span class="kicker">the emotional center</span></div>
+    <p class="lead">The <b>key</b> sets a song's emotional home — the tonal place the melody keeps returning to. Roughly: <b>major = brighter</b>, <b>minor = darker</b>. Name one in your prompt and you steer the whole feeling.</p>
+    <div class="warn"><b>Reality check:</b> you can't <i>lock</i> an exact key by tag — <code>[Key: G minor]</code> is placebo (see <a href="#works" style="color:var(--teal)">What Actually Works</a>). What <i>does</i> carry is the broad mood: name <b>major</b> or <b>minor</b> plus the feeling-word ("warm," "stormy") and let that bias the vibe. For a true key, lock it in Suno Studio after generating.</div>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Major keys — brighter tones</h3>
+        <table><thead><tr><th>Key</th><th>Feel</th><th>Fits</th></tr></thead><tbody>
+        <tr><td><b>C</b></td><td>pure, open, neutral, balanced</td><td>clean pop, folk, beginner</td></tr>
+        <tr><td><b>G</b></td><td>warm, natural, uplifting</td><td>country, Americana, classic rock</td></tr>
+        <tr><td><b>D</b></td><td>triumphant, regal, bold</td><td>orchestral, rock ballads, anthemic</td></tr>
+        <tr><td><b>A</b></td><td>bright, confident, joyful</td><td>pop rock, upbeat country, singalongs</td></tr>
+        <tr><td><b>E</b></td><td>brash, energetic, exciting</td><td>rock, blues, aggressive pop</td></tr>
+        <tr><td><b>B</b></td><td>radiant, assertive, polished</td><td>gospel, R&amp;B, cinematic</td></tr>
+        <tr><td><b>F</b></td><td>pastoral, calm, gentle</td><td>classical, singer-songwriter, soft rock</td></tr>
+        <tr><td><b>B♭</b></td><td>noble, rich, full</td><td>jazz, brass-heavy, classical</td></tr>
+        <tr><td><b>E♭</b></td><td>lush, mellow, expressive</td><td>soul, funk, ballads</td></tr>
+        </tbody></table>
+      </div>
+      <div class="card">
+        <h3>Minor keys — darker tones</h3>
+        <table><thead><tr><th>Key</th><th>Feel</th><th>Fits</th></tr></thead><tbody>
+        <tr><td><b>A min</b></td><td>sad, introspective, sincere</td><td>acoustic ballads, emo, lo-fi</td></tr>
+        <tr><td><b>E min</b></td><td>haunting, melancholic, mysterious</td><td>metal, alt rock, cinematic</td></tr>
+        <tr><td><b>D min</b></td><td>dramatic, tragic, emotional</td><td>classical, folk noir, film scoring</td></tr>
+        <tr><td><b>B min</b></td><td>dark, brooding, poetic</td><td>indie, alt-pop, gothic rock</td></tr>
+        <tr><td><b>F♯ min</b></td><td>tense, sorrowful, expressive</td><td>experimental, downbeat pop, EDM</td></tr>
+        <tr><td><b>C♯ min</b></td><td>ethereal, romantic, haunting</td><td>dream pop, ambient, solo piano</td></tr>
+        <tr><td><b>G min</b></td><td>bold, mournful, stormy</td><td>classical, jazz, moody pop</td></tr>
+        <tr><td><b>D♯ min</b></td><td>strange, eerie, alien</td><td>horror, avant-garde, glitch</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODES -->
+  <section id="modes">
+    <div class="sec-head"><span class="e">🎚️</span><h2>Mode — Personality &amp; Genre Flavor</h2><span class="kicker">same notes, different mood</span></div>
+    <p class="lead">Modes shift the emotional color further. Each is built from the major scale but <b>starts on a different note</b> — same notes, new mood. Suno responds to modal prompts, especially paired with a genre cue.</p>
+    <div class="viz"><svg viewBox="0 0 300 50" role="img" aria-label="Mode brightness">
+      <defs><linearGradient id="mb" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#a5f3fc"/><stop offset="0.34" stop-color="#5eead4"/>
+        <stop offset="0.62" stop-color="#2dd4bf"/><stop offset="1" stop-color="#0f3b38"/></linearGradient></defs>
+      <rect x="4" y="6" width="292" height="13" rx="6.5" fill="url(#mb)"/>
+      <g font-size="9" fill="#eaf3f2" text-anchor="middle" font-weight="600" font-family="Segoe UI,sans-serif">
+        <text x="25" y="34">Lyd</text><text x="66" y="34">Ion</text><text x="107" y="34">Mix</text>
+        <text x="150" y="34">Dor</text><text x="193" y="34">Aeo</text><text x="234" y="34">Phr</text><text x="275" y="34">Loc</text></g>
+      <g font-size="8" fill="#8fa6a4"><text x="4" y="47">◀ brightest</text><text x="296" y="47" text-anchor="end">darkest ▶</text></g>
+    </svg></div>
+    <div class="grid g3">
+      <div class="card"><h3>Ionian <span class="pill">major scale</span></h3>
+        <p><b>Bright, happy, stable.</b> Optimistic, confident. Pop, country, classical, folk, children's music.</p>
+        <div class="prompt">A cheerful pop anthem in <b>C Ionian</b> with bright synths and an upbeat groove.</div></div>
+      <div class="card"><h3>Dorian <span class="pill">minor w/ lift</span></h3>
+        <p><b>Cool, soulful, moody but hopeful</b> — a minor scale with a jazzy/gospel uplift. Funk, soul, gospel, R&amp;B, jazz, Celtic folk.</p>
+        <div class="prompt">A groovy soul jam in <b>D Dorian</b> with clavinet and smooth background vocals.</div></div>
+      <div class="card"><h3>Phrygian <span class="pill">minor w/ tension</span></h3>
+        <p><b>Dark, exotic, tense.</b> Intense, dramatic. Flamenco, metal, Middle-Eastern / Spanish-influenced music.</p>
+        <div class="prompt">A moody instrumental in <b>E Phrygian</b> with nylon guitar and haunting strings.</div></div>
+      <div class="card"><h3>Lydian <span class="pill">major w/ lift</span></h3>
+        <p><b>Dreamy, ethereal, expansive</b> — bright but floaty, surreal. Film scores, dream pop, progressive rock, fusion.</p>
+        <div class="prompt">A cinematic ambient track in <b>F Lydian</b> with shimmering pads and reverb-heavy guitar.</div></div>
+      <div class="card"><h3>Mixolydian <span class="pill">major w/ edge</span></h3>
+        <p><b>Gritty, bluesy, relaxed confidence</b> — like major with more swagger. Blues, rock, country, funk, jam bands.</p>
+        <div class="prompt">A laid-back country rock tune in <b>G Mixolydian</b> with twangy guitars and warm organ.</div></div>
+      <div class="card"><h3>Aeolian <span class="pill">natural minor</span></h3>
+        <p><b>Sad, introspective, dramatic</b> — the classic minor feel with emotional pull. Alt rock, ballads, EDM, cinematic, folk.</p>
+        <div class="prompt">A melancholic indie track in <b>A Aeolian</b> with layered guitars and breathy vocals.</div></div>
+      <div class="card"><h3>Locrian <span class="pill">dissonant</span></h3>
+        <p><b>Unsettling, chaotic, unresolved</b> — the darkest mode; its diminished tonic makes it unstable. Experimental, avant-garde, some black metal.</p>
+        <div class="prompt">An experimental horror soundscape in <b>B Locrian</b> with distorted drones and glitch textures.</div></div>
+    </div>
+  </section>
+
+  <!-- TIME SIGNATURES -->
+  <section id="time">
+    <div class="sec-head"><span class="e">⏱️</span><h2>Time Signatures — The Beat Structure</h2><span class="kicker">how the rhythm is grouped</span></div>
+    <p class="lead">A time signature is two stacked numbers (like <b>4/4</b>). The <b>top</b> = how many beats per measure; the <b>bottom</b> = which note counts as one beat (4 = quarter note, 8 = eighth). It decides how a song's pulse is grouped and counted.</p>
+    <div class="warn"><b>Reality check:</b> a time-signature <i>tag</i> like <code>[6/8]</code> doesn't reach Suno's generator — per Suno's own docs it only sets the <i>Studio editing grid</i>. So treat the panels below as <b>natural-language feel cues</b> ("slow waltz," "compound 6/8 lilt"), a weak bias — not a lock. True odd meter happens in Suno Studio after the fact.</div>
+    <div class="grid g3">
+      <div class="card"><h3>4/4 — "Common Time" <span class="pill">default</span></h3>
+        <p><b>Even, stable, easy to follow.</b> Used in almost everything — pop, rock, hip-hop, EDM, funk. Suno defaults here unless told otherwise.</p>
+        <div class="prompt">A pop-punk anthem in <b>4/4</b> with driving guitars and upbeat drums.</div></div>
+      <div class="card"><h3>3/4 — "Waltz Time"</h3>
+        <p><b>Lyrical, swaying, dance-like.</b> Waltzes, folk, ballads, older pop.</p>
+        <div class="prompt">A tender acoustic waltz in <b>3/4</b> with fingerpicked guitar and gentle vocals.</div></div>
+      <div class="card"><h3>6/8 — "Compound Waltz / Slow Shuffle"</h3>
+        <p><b>Flowing, lilting, more emotional than 3/4.</b> Irish folk, soul ballads, cinematic scores, gospel.</p>
+        <div class="prompt">A gospel soul piece in <b>6/8</b> with organ swells and call-and-response vocals.</div></div>
+      <div class="card"><h3>2/4 — "March / Ragtime"</h3>
+        <p><b>Snappy, driving, rigid.</b> Military marches, polka, early country.</p>
+        <div class="prompt">A traditional folk march in <b>2/4</b> with fiddle and snare drum.</div></div>
+      <div class="card"><h3>12/8 — "Triplet Blues / Shuffle"</h3>
+        <p><b>Swinging, bluesy, expressive.</b> Classic blues, doo-wop, R&amp;B, soul.</p>
+        <div class="prompt">A soulful blues track in <b>12/8</b> with walking bass and reverb-soaked vocals.</div></div>
+      <div class="card"><h3>5/4 — "Asymmetrical Groove"</h3>
+        <p><b>Uneven, progressive, hypnotic.</b> Jazz fusion, prog rock, soundtracks.</p>
+        <div class="prompt">A moody prog instrumental in <b>5/4</b> with layered synths and odd-meter drums.</div></div>
+      <div class="card"><h3>7/8 — "Staggered Time"</h3>
+        <p><b>Angular, complex, experimental.</b> Math rock, Balkan folk, prog metal.</p>
+        <div class="prompt">An experimental math rock piece in <b>7/8</b> with tapped guitar riffs and glitchy drums.</div></div>
+      <div class="card"><h3>9/8 — "Compound Triple"</h3>
+        <p><b>Rolling, energetic, elegant.</b> Classical dances, some Afro-Cuban or Celtic music.</p>
+        <div class="prompt">A lively folk dance in <b>9/8</b> with pipes and hand percussion.</div></div>
+    </div>
+  </section>
+
+  <!-- TEMPO -->
+  <section id="tempo">
+    <div class="sec-head"><span class="e">🏃</span><h2>Tempo &amp; Phrasing — Speed ≠ Emotion</h2><span class="kicker">pace + how it feels</span></div>
+    <p class="lead">Tempo sets the pace, but <b>speed doesn't equal emotion</b>: a fast song can be gentle, a slow one intense. It all depends on context — especially the time signature it's paired with.</p>
+    <div class="grid g3">
+      <div class="card"><h3>BPM ranges</h3>
+        <table><thead><tr><th>BPM</th><th>Feel</th></tr></thead><tbody>
+        <tr><td><b>60–80</b></td><td>slow, intimate, meditative</td></tr>
+        <tr><td><b>80–110</b></td><td>mid-tempo, groovy, versatile</td></tr>
+        <tr><td><b>120+</b></td><td>high energy, dance, urgency</td></tr>
+        </tbody></table>
+        <h4>Pair with phrasing words</h4>
+        <p class="note">"slow-burning," "punchy and upbeat," "laid-back groove," "driving rhythm."</p>
+      </div>
+      <div class="card"><h3>Tempo × time signature are linked</h3>
+        <p>The time signature groups the beats, which radically changes how a tempo <i>feels</i>:</p>
+        <ul class="defs">
+          <li><span class="term">240 BPM in 2/4</span> = rapid-fire, marching urgency (drumline / aggressive punk)</li>
+          <li><span class="term">240 BPM in 12/8</span> = swinging triplets, flowing and soulful (blues shuffle / gospel)</li>
+        </ul>
+        <p class="note">That's why <b>120 in 6/8</b> rolls while <b>120 in 4/4</b> marches — same number, different body.</p>
+      </div>
+      <div class="card">
+        <h3>The takeaway</h3>
+        <div class="callout" style="margin:4px 0"><p style="margin:0">Set the BPM <b>explicitly</b>, then pair it with a time-signature feel and a phrasing word. Those three together do more than any single adjective.</p></div>
+        <div class="prompt">A slow-burning soul ballad at <b>72 BPM in 6/8</b>, laid-back groove, warm Rhodes and brushed drums.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POETIC METER -->
+  <section id="meter">
+    <div class="sec-head"><span class="e">🪶</span><h2>Poetic Meter — Where the Words Land</h2><span class="kicker">match the lyric to the beat</span></div>
+    <p class="lead">Poetic meter is the rhythm of your <b>lyrics</b> — how stressed (punched) and unstressed syllables fall. It's built from repeating units called <b>feet</b>. Get it close to the groove and Suno sings your words naturally; fight it and lines come out awkward.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>The metrical feet</h3>
+        <table><thead><tr><th>Foot</th><th>Pattern</th><th>Example &amp; feel</th></tr></thead><tbody>
+        <tr><td><b>Iamb</b></td><td>da-DUM</td><td>"I walked alone beneath the sky" — smooth, natural (pop, folk, ballads)</td></tr>
+        <tr><td><b>Trochee</b></td><td>DA-dum</td><td>"Shadows fall on ruined stone" — forceful, chant-like (rock, gothic, hooks)</td></tr>
+        <tr><td><b>Anapest</b></td><td>da-da-DUM</td><td>"In the dead of the night, I was gone" — flowing, builds momentum (rap, gospel, theatrical)</td></tr>
+        <tr><td><b>Dactyl</b></td><td>DA-da-dum</td><td>"Memories fade away from me" — rolling, dramatic (6/8 &amp; 12/8 feel)</td></tr>
+        <tr><td><b>Amphibrach</b></td><td>da-DUM-da</td><td>"I walked along the ruins" — balanced yet flowing (3/4 or 9/8)</td></tr>
+        <tr><td><b>Cretic</b></td><td>DA-dum-DA</td><td>"Time has gone, but still we wait" — punchy, emphatic (odd / shifting meters)</td></tr>
+        <tr><td><b>Molossus</b></td><td>DA-DA-DA</td><td>"Burn that name now dead" — rare, intense (chants, breakdowns)</td></tr>
+        </tbody></table>
+      </div>
+      <div class="card">
+        <h3>Don't get too hung up on it</h3>
+        <p>Meter is a <b>tool, not a rule</b>. Almost no songwriter follows it perfectly — think of it as a <b>scaffold</b>: it gives your lines rhythm, but slight breaks are what make them sound human.</p>
+        <p>Match every syllable perfectly and lyrics turn <b>robotic</b>. Better to find a general pattern (iambic, anapestic) and <b>repeat it loosely</b>, letting the natural stresses of speech and melody take over.</p>
+        <div class="callout" style="margin-top:10px"><p style="margin:0"><b>Watch out:</b> even great-rhyming lines can fight the music. If syllable stresses land in the wrong spots versus the beat, Suno sings them awkwardly. Match the foot to the meter below.</p></div>
+      </div>
+    </div>
+
+    <div class="card full">
+      <h3>Best-fit meters per time signature</h3>
+      <table><thead><tr><th>Time</th><th>Feel</th><th>Best-fit poetic feet</th><th>Genre matches</th></tr></thead><tbody>
+      <tr><td><b>4/4</b></td><td>balanced, steady</td><td><b>Iambic</b> "I <i>walked</i> a<i>lone</i> to<i>night</i>" · <b>Trochaic</b> "<i>Win</i>ter <i>comes</i>" · <b>Anapestic</b> "On the <i>edge</i> of the <i>storm</i>"</td><td>pop, rock, indie, hip-hop, EDM, alt-country</td></tr>
+      <tr><td><b>3/4</b></td><td>swaying, circular</td><td><b>Iambic</b> (triple groupings) · <b>Dactylic</b> "<i>Win</i>ter is <i>fall</i>ing down" · 6/6 syllables per line for balance</td><td>waltz, folk ballads, acoustic love songs, old-time country</td></tr>
+      <tr><td><b>6/8</b></td><td>rolling triplets</td><td><b>Anapestic</b> "In the <i>dark</i> of the <i>night</i>" (perfect triplet feel) · <b>Dactylic</b> "<i>Mem</i>ory fades a<i>way</i>" (elegant/mournful)</td><td>blues, gospel, cinematic, soul ballads, Irish/Celtic folk</td></tr>
+      <tr><td><b>5/4 · 7/8</b></td><td>off-kilter, progressive</td><td><b>Irregular syllable patterns</b> to match the groove — "Drifting away / I still feel lost" (7, then 5). Don't force symmetry; embrace the tension.</td><td>prog rock, math rock, avant-garde, soundtrack</td></tr>
+      </tbody></table>
+    </div>
+  </section>
+
+  <!-- META TAGS -->
+  <section id="tags">
+    <div class="sec-head"><span class="e">🏷️</span><h2>Meta Tags in Suno</h2><span class="kicker">structure, instruments, transitions</span></div>
+    <p class="lead">Meta tags are instructions you put <b>inside the lyrics box</b> (not the style prompt) to control how Suno structures the song, what plays in each section, and how transitions feel.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3>What they look like &amp; how to format</h3>
+        <pre class="box"><span class="t">[Intro: ambient pads]</span>
+<span class="t">[Verse: soft piano]</span>
+<span class="t">[Chorus: distorted guitars, big drums]</span>
+<span class="t">[Bridge: synth arpeggios, rising tension]</span></pre>
+        <ul class="defs">
+          <li>Always use square brackets: <code>[Section: instrument(s), mood]</code></li>
+          <li>Suno reads both <b>section names</b> and <b>instrument descriptors</b></li>
+          <li>Keep it concise — <b>1–3 elements per tag</b> is best</li>
+        </ul>
+        <h4>Common sections you can tag</h4>
+        <div class="tagchips">
+          <span>[Intro]</span><span>[Verse]</span><span>[Chorus]</span><span>[Bridge]</span>
+          <span>[Drop]</span><span>[Breakdown]</span><span>[Outro]</span>
+        </div>
+        <p class="note"><code>[Drop]</code> is especially useful for EDM / hip-hop. You don't need to use them all.</p>
+      </div>
+      <div class="card">
+        <h3>What tags do for you</h3>
+        <p>Meta tags help Suno:</p>
+        <ul class="defs">
+          <li>Control <b>instrument layering</b></li>
+          <li>Handle section <b>builds and drops</b></li>
+          <li>Create clear <b>contrast</b> between parts</li>
+          <li>Avoid flat, repetitive arrangements</li>
+        </ul>
+        <h4>Tags help editing too ✂️</h4>
+        <p>Tagging breaks the song into labeled sections in the editor — so finding and selecting the exact part you want to change is far easier.</p>
+        <div class="editor">
+          <div class="pane"><div class="ph">✗ Untagged</div>
+            <div class="blob">one long undivided block of audio — scrub and hunt to find the part you want…</div></div>
+          <div class="pane"><div class="ph">✓ Tagged</div>
+            <div class="seg"><span class="lbl">[Intro]</span><span class="bar"></span></div>
+            <div class="seg"><span class="lbl">[Verse]</span><span class="bar"></span></div>
+            <div class="seg"><span class="lbl">[Chorus]</span><span class="bar"></span></div>
+            <div class="seg"><span class="lbl">[Bridge]</span><span class="bar"></span></div>
+            <div class="seg"><span class="lbl">[Outro]</span><span class="bar"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OPERATOR'S MANUAL ===================== -->
+  <div class="band"><span>⚙️ The Suno Operator's Manual</span></div>
+
+  <section id="fieldlaw">
+    <div class="sec-head"><span class="e">🎛️</span><h2>The Field Law — The #1 Rule</h2><span class="kicker">two boxes, two jobs</span></div>
+    <p class="lead">This single rule fixes more bad generations than anything else. Suno has two input boxes, and <b>each wants a different kind of writing</b>. Put the wrong thing in the wrong box and Suno either ignores it or <i>sings your instructions out loud</i>.</p>
+    <div class="twobox">
+      <div class="b style"><h5>🎨 STYLE box <span class="rel rel-v">no brackets</span></h5>
+        <p style="margin:0;font-size:13px">The <b>sound</b> — genre, sub-genre, mood, instruments, production, BPM. <b>Comma-separated, bracket-free.</b> Brackets here can make Suno ignore your genre or glitch the whole generation.</p>
+        <p class="mono" style="font-size:11px;margin:8px 0 0">warm neo-soul, intimate, Rhodes, brushed drums, 78 BPM</p></div>
+      <div class="b lyr"><h5>🎤 LYRICS box <span class="rel rel-v">[use brackets]</span></h5>
+        <p style="margin:0;font-size:13px">Your <b>words</b> + bracketed <b>[performance &amp; structure directions]</b> on their own lines. These are Suno's <b>most reliable lever</b>.</p>
+        <pre class="box" style="margin:8px 0 0"><span class="t">[Verse]</span>
+<span class="t">[whispered, intimate]</span>
+cold coffee on the sill…</pre></div>
+    </div>
+    <div class="callout"><p style="margin:0"><b>Why brackets win:</b> testing of a 300+ tag database rates bracket tags in the Lyrics box at <b>~90% compliance</b> — roughly <b>10× more powerful for arrangement</b> than a Style descriptor. Section &amp; performance <i>moments</i> → <b>[brackets, in Lyrics]</b>. Sound &amp; texture → <b>Style, bare</b>.</p></div>
+    <div class="grid g2">
+      <div class="card"><h3>A bracket needs a friend in Style</h3>
+        <p>A bracket only fires if the thing is also plausible in the Style field. <code>[Sax Solo]</code> works when "saxophone" is in Style; in an acoustic-guitar song it's ignored — or sung. <b>Double-declare</b> stubborn elements in both boxes.</p></div>
+      <div class="card"><h3>The per-section cap</h3>
+        <p>Keep to <b>2–4 bracket tags per section</b> (and 2–4 named instruments in Style) — past that Suno drops the lower-priority ones. Priority inside a section:</p>
+        <p class="note" style="margin-top:4px"><b>section name → vocal delivery → instruments → effects/dynamics</b> (effects drop first).</p>
+        <p>Save slots by <b>combining</b>: <code>[Explosive Final Chorus]</code> beats <code>[Final Chorus]</code> + <code>[Explosive]</code> — one unified instruction, not two competing ones.</p></div>
+    </div>
+  </section>
+
+  <section id="works">
+    <div class="sec-head"><span class="e">✅</span><h2>What Actually Works</h2><span class="kicker">verified · biases · placebo</span></div>
+    <p class="lead">Half of "Suno lore" is folklore. Tags are <b>probability nudges, not commands</b> — and some do nothing at all. Three honesty tiers:</p>
+    <p style="margin:6px 0"><span class="rel rel-v">Verified</span> reliably does the thing &nbsp; <span class="rel rel-b">Biases</span> nudges (pair with matching genre) &nbsp; <span class="rel rel-p">Placebo</span> folklore / fails</p>
+    <div class="grid g3">
+      <div class="card"><h3><span class="rel rel-v">Verified</span></h3>
+        <ul class="defs">
+          <li>Section tags — <code>[Verse] [Chorus] [Bridge] [Outro]</code></li>
+          <li>Solo brackets — <code>[Guitar Solo]</code> · <code>[Instrumental Break]</code></li>
+          <li><code>[Whispered]</code> — the most reliable delivery tag</li>
+          <li><code>[Build]</code> → <code>[Drop]</code> in EDM contexts</li>
+          <li><code>[End]</code> — kills the long instrumental tail</li>
+          <li>A single numeric <b>BPM</b> in Style (as a target)</li>
+        </ul></div>
+      <div class="card"><h3><span class="rel rel-b">Biases-output</span></h3>
+        <ul class="defs">
+          <li>Most <b>instrument</b> brackets (reinforce in Style)</li>
+          <li><b>Mood</b> &amp; <b>dynamics</b> — <code>[Crescendo] [Soft] [Powerful]</code></li>
+          <li>Vocal-adjacent <b>SFX</b> — <code>[Applause] [Laughing] [Sighs]</code></li>
+          <li>Accent / dialect descriptors</li>
+          <li><code>[Key Change]</code> as a <i>directional</i> lift (not a target key)</li>
+        </ul></div>
+      <div class="card"><h3><span class="rel rel-p">Placebo — stop using</span></h3>
+        <ul class="defs">
+          <li><b>Percentage tags</b> — <code>[Reverb: 30%]</code> do nothing</li>
+          <li><code>[hard cut]</code> — gets <i>sung aloud</i></li>
+          <li><code>[Accelerando]</code>/<code>[Ritardando]</code> won't change BPM</li>
+          <li><b>Exact key-lock</b> — <code>[Key: G minor]</code></li>
+          <li><b>Time-signature tags</b> for generation (Studio-grid only)</li>
+          <li>BPM <b>ranges</b> ("120–130") — it just picks one</li>
+        </ul></div>
+    </div>
+    <div class="grid g2">
+      <div class="card"><h3>🎚️ The big reality checks</h3>
+        <ul class="defs">
+          <li><span class="term">BPM is a target, not a metronome.</span> Suno drifts (it's official — "like live music"). One number in Style; lock the grid in Studio if you need it tight.</li>
+          <li><span class="term">SFX often get SUNG.</span> A bare <code>[gunshot]</code> may come out as the <i>word</i>. Prefer Style ambience ("vinyl crackle," "smoky club ambience") and regenerate 3–5×.</li>
+          <li><span class="term">Key &amp; time-sig don't lock.</span> Bias the <i>feel</i> in words; set the real thing in Suno Studio afterward.</li>
+        </ul></div>
+      <div class="card"><h3>🎲 The operating mindset</h3>
+        <p>Identical prompts give different takes — that's the feature. <b>Generate 3–5, keep the best.</b> If a tag's ignored after a few rolls: move it to the other box or rephrase it. If output is <b>generic</b> → under-specified (add a subgenre + a texture word). If it's <b>chaotic</b> → over-stacked (trim to 4–8 Style tags / 2–4 brackets per section).</p></div>
+    </div>
+  </section>
+
+  <section id="formula">
+    <div class="sec-head"><span class="e">🧱</span><h2>The Style-Prompt Formula</h2><span class="kicker">how to fill the Style box</span></div>
+    <p class="lead">A strong Style prompt is a comma-separated stack, <b>dominant tag first</b>. Aim for <b>8–15 tags</b> — under 5 is vague, over 20 turns to mush. Five slots:</p>
+    <div class="grid g2">
+      <div class="card">
+        <ol style="margin:0;padding-left:18px;line-height:1.7">
+          <li><b>Genre + subgenre</b> (1–2, dominant first). Subgenre beats broad label — "90s grunge" &gt; "rock."</li>
+          <li><b>Mood + energy</b> — "melancholic, building."</li>
+          <li><b>Vocal</b> = character + delivery + effect (next section).</li>
+          <li><b>2–4 instruments with character</b> — "Rhodes electric piano," not "keyboard."</li>
+          <li><b>Production + BPM</b> — "lo-fi tape warmth, 95 BPM."</li>
+        </ol>
+        <p class="note" style="margin-top:9px">Style box holds ~1000 chars on v5.5 — spend them on specifics. Every weak tag steals weight from a strong one.</p>
+      </div>
+      <div class="card"><h3>Worked example</h3>
+        <div class="prompt" style="font-style:normal">synth-pop, 80s-inspired, euphoric and nostalgic, powerful female vocals with layered harmonies, analog synth pads, punchy drum machine, shimmering arpeggios, Moog bass, polished radio-ready production, 118&nbsp;BPM</div>
+        <h4>And to subtract</h4>
+        <p>Use the <b>avoid / negative</b> field: <code>no autotune</code>, <code>no 808s</code>, <code>no fade out</code>. No negative field? <b>Crowd it out</b> — be so specific about what you want ("purely synthesized, no acoustic instruments") there's no room for what you don't.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="vocals">
+    <div class="sec-head"><span class="e">🎤</span><h2>The Vocal Triple-Stack</h2><span class="kicker">character + delivery + effect</span></div>
+    <p class="lead">"Male vocals" gives Suno almost nothing. Specify <b>all three layers</b> — that's the gap between a generic singer and a <i>performance</i>.</p>
+    <div class="grid g3">
+      <div class="card"><h3>1 · Character <span class="pill">who</span></h3>
+        <p class="note" style="margin-top:0">raspy female tenor · smooth baritone · airy soprano · gravelly old-man · deep female alto · young male tenor · androgynous</p></div>
+      <div class="card"><h3>2 · Delivery <span class="pill">how</span></h3>
+        <p class="note" style="margin-top:0">breathy · powerful belt · whispered · spoken word · melodic rap · drawl · falsetto · crooning · aggressive growl · screamed</p></div>
+      <div class="card"><h3>3 · Effect <span class="pill">mix</span></h3>
+        <p class="note" style="margin-top:0">reverb-drenched · dry close-mic · doubled harmonies · auto-tuned · vocoder · telephone EQ · pitched-down · heavily processed</p></div>
+    </div>
+    <div class="grid g2">
+      <div class="card"><h3>Genre-default voices (start, then bend)</h3>
+        <table><thead><tr><th>Genre</th><th>Natural voice</th></tr></thead><tbody>
+        <tr><td>Lo-fi</td><td>pitched-down, filtered, distant</td></tr>
+        <tr><td>Trap</td><td>melodic rap, auto-tuned, adlibs</td></tr>
+        <tr><td>Indie folk</td><td>soft, breathy, close-mic, intimate</td></tr>
+        <tr><td>Metal</td><td>aggressive growl / screamed, powerful</td></tr>
+        <tr><td>R&amp;B</td><td>smooth, silky, runs, falsetto</td></tr>
+        <tr><td>Country</td><td>drawl, twang, storytelling</td></tr>
+        </tbody></table></div>
+      <div class="card"><h3>Section-by-section control</h3>
+        <p>Drop the delivery right where it changes — a bracket before a section is a <i>local</i> instruction:</p>
+        <pre class="box"><span class="t">[Verse]</span> <span class="t">(whispered, intimate)</span>
+i keep your number, i never call
+<span class="t">[Chorus]</span> <span class="t">(belted, powerful)</span>
+so why can't I let GO…</pre>
+        <p class="note">Suno defaults toward <i>melody</i> — to force rapping, say "rap vocals / spoken flow / rhythmic delivery" explicitly.</p></div>
+    </div>
+  </section>
+
+  <section id="pronounce">
+    <div class="sec-head"><span class="e">🗣️</span><h2>Make Suno Say It Right</h2><span class="kicker">it sings by spelling, not meaning</span></div>
+    <p class="lead">Suno has <b>no dictionary</b> — it sings what a word's <i>spelling looks like it should sound like</i>. So <b>respell</b> anything ambiguous <i>before</i> you generate (you can't fix a mispronunciation after — only regenerate). The highest-value copy-paste trick here.</p>
+    <div class="grid g3">
+      <div class="card"><h3>Homographs — pick the sound</h3>
+        <table><thead><tr><th>Want</th><th>Write</th></tr></thead><tbody>
+        <tr><td>read (past)</td><td><code>red</code></td></tr>
+        <tr><td>read (present)</td><td><code>reed</code></td></tr>
+        <tr><td>live (concert)</td><td><code>laiv</code></td></tr>
+        <tr><td>live (alive)</td><td><code>liv</code></td></tr>
+        <tr><td>lead (metal)</td><td><code>led</code></td></tr>
+        <tr><td>lead (guide)</td><td><code>leed</code></td></tr>
+        <tr><td>bass (instrument)</td><td><code>bayss</code></td></tr>
+        <tr><td>tear (crying)</td><td><code>teer</code></td></tr>
+        <tr><td>tear (ripping)</td><td><code>tare</code></td></tr>
+        </tbody></table></div>
+      <div class="card"><h3>Never type raw digits</h3>
+        <table><thead><tr><th>On the page</th><th>Write</th></tr></thead><tbody>
+        <tr><td>2024</td><td><code>twenty twenty-four</code></td></tr>
+        <tr><td>24/7</td><td><code>twenty four seven</code></td></tr>
+        <tr><td>3am</td><td><code>three A-M</code></td></tr>
+        <tr><td>$500</td><td><code>five hundred dollars</code></td></tr>
+        <tr><td>1st / 2nd</td><td><code>first / second</code></td></tr>
+        </tbody></table>
+        <h4>Acronyms &amp; silent letters</h4>
+        <p class="note" style="margin-top:0"><code>AI → A-I</code> · <code>DJ → dee-jay</code> · <code>through → thru</code> · <code>knight → nite</code> · <code>enough → enuff</code></p></div>
+      <div class="card"><h3>Names &amp; syllable-binding</h3>
+        <p><b>Names fail most</b> — respell &amp; test in a 30s clip: <code>Siobhan → Shi-vawn</code>, <code>Versace → Ver-sah-chee</code>, <code>Yosemite → Yo-sem-ih-tee</code>.</p>
+        <h4>Hyphens = rhythm control</h4>
+        <ul class="defs">
+          <li><span class="term">Bind a run</span> — <code>ra-ta-ra-ta</code> reads as one fluid utterance, each beat enunciated.</li>
+          <li><span class="term">Split a rushed word</span> — <code>Co-llec-tions</code> lands each syllable on its own beat.</li>
+          <li><span class="term">Lock a chant</span> — <code>we-will-we-will</code> tightens the rhythm.</li>
+        </ul></div>
+    </div>
+  </section>
+
+  <section id="typography">
+    <div class="sec-head"><span class="e">⌨️</span><h2>The Typography Layer</h2><span class="kicker">the page IS the performance direction</span></div>
+    <p class="lead">Once a tag sets the <i>intent</i>, the <b>way you type the line</b> executes it — some of the most reliable controls in Suno, because they ride directly on the spelling.</p>
+    <div class="grid g2">
+      <div class="card">
+        <table><thead><tr><th>Type it</th><th>Effect</th></tr></thead><tbody>
+        <tr><td><code>I NEED you</code></td><td>CAPS = louder / intense on that word</td></tr>
+        <tr><td><code>lo-o-ove</code></td><td>stretched vowel = sustained note / melisma</td></tr>
+        <tr><td><code>I... need... you</code></td><td>ellipses = dramatic pauses</td></tr>
+        <tr><td><code>ne-e-ed</code></td><td>hyphen-stretch = drawn-out, emotional</td></tr>
+        <tr><td><code>wait—stop</code></td><td>em-dash = hard clipped cut</td></tr>
+        <tr><td><code>i'm so tired...</code></td><td>lowercase + soft dots = intimate, small</td></tr>
+        <tr><td><code>(go) (go) (go)</code></td><td>parens = adlib stabs on the beat</td></tr>
+        </tbody></table>
+      </div>
+      <div class="card"><h3>Stack them into a performance</h3>
+        <p>Tag sets intent; typography acts it out — combine the acting tag, the caps, the stretch, the pause:</p>
+        <pre class="box"><span class="t">[whispered, trembling]</span>
+I keep your number... I never call
+<span class="t">[building, voice cracks]</span>
+and every NIGHT it gets a little harder
+<span class="t">[belted, desperate]</span>
+to PRETEND that I'm fi-i-ine at all</pre>
+        <p class="note"><b>Parentheses are sung</b> (adlibs, echoes); <b>brackets are directions</b> (not sung). Tuck <code>(yeah)</code> <code>(uh)</code> on the offbeat behind the lead.</p></div>
+    </div>
+  </section>
+
+  <section id="fixes">
+    <div class="sec-head"><span class="e">🩹</span><h2>Troubleshooting — Symptom → Fix</h2><span class="kicker">when it comes out wrong</span></div>
+    <div class="card full">
+      <table><thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead><tbody>
+      <tr><td>Sounds generic / "default"</td><td>vague prompt</td><td>add subgenre + mood + 3-layer vocal + 2–4 named instruments + BPM (8–15 tags)</td></tr>
+      <tr><td>Wrong genre creeps in</td><td>no tempo anchor / weak first tag</td><td>add a specific BPM; put the dominant genre first; add <code>no [unwanted element]</code></td></tr>
+      <tr><td>Mispronounced word</td><td>spelling ambiguity</td><td>phonetic respell <i>before</i> generating</td></tr>
+      <tr><td>Vocals mumble / unclear</td><td>no delivery cue / too many words</td><td>add <code>[spoken word]</code> or <code>[crisp]</code>; cut lyric density</td></tr>
+      <tr><td>Singer changes every run</td><td>Style wording drift</td><td>lock the <i>exact</i> Style text + BPM; reuse a Persona / Custom Model</td></tr>
+      <tr><td>No chorus payoff / lift</td><td>missing structure tags</td><td>mark <code>[Chorus]</code>; add <code>[Build]</code> before it; <code>[Final Chorus: louder]</code></td></tr>
+      <tr><td>Long dead instrumental tail</td><td>no stop tag</td><td><code>[End]</code> in lyrics + <code>no outro, no fade</code> in avoid</td></tr>
+      <tr><td>Words rushed</td><td>verse too long</td><td>4–8 lines per verse; add <code>[Instrumental]</code> breaks for air</td></tr>
+      <tr><td>Effect baked in / can't remix</td><td>stuck with Suno's reverb</td><td>Suno Studio → Remove FX → export stems → process externally</td></tr>
+      </tbody></table>
+    </div>
+    <div class="callout"><p style="margin:0"><b>Iteration discipline:</b> test risky bits (a name, an accent, a hook) in a 20–30s clip first · re-roll cheap, tune tags only once a roll is ~80% there · section-replace one bad part instead of re-rolling the whole song · save winning Style prompts <i>verbatim</i> — tiny wording drift swaps the singer.</p></div>
+  </section>
+
+  <footer>
+    <span class="fam">⚒️ Bardcore Engineering</span> — part of <b>The Bardcore Forge</b>.<br>
+    New to writing? Start with <a href="From Cold to Flame.html">From Cold to Flame</a> · Want the full craft reference? <a href="The Bard's Codex.html">The Bard's Codex</a> · <a href="The Bardcore Forge (Start Here).html">↩ Back to Start</a>
+    <br><span style="font-size:11.5px; color:#6b8480">📎 Deep reference (community-sourced — <i>try, don't depend</i>): <a href="suno tags list.md">Full Suno Tag List</a> · <a href="suno-maximalist-tricks.md">The Maximalist Trick Bible</a></span>
+  </footer>
+
+</div>
+</body>
+</html>
